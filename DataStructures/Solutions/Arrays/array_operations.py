@@ -56,7 +56,8 @@ class ArrayOperations:
 
         return max_val, min_val 
 
-    @staticmethod 
+    
+    @staticmethod
     def remove_duplicates(arr):
         ''' Remove duplicates from sorted array.
        
@@ -67,15 +68,16 @@ class ArrayOperations:
                     When we use the pop() method, we are reducing the size of the array so keeping
                     track of i becomes difficult and inefficient.
        '''
-       if not arr:
-           return []
+        if not arr:
+            return []
 
         result = [arr[0]]
         for i in range(1, len(arr)):
             if arr[i] != arr[i-1]:
                 result.append(arr[i])
-        
+
         return result
+
 
     @staticmethod 
     def two_sum(arr, target):
@@ -124,16 +126,19 @@ class ArrayOperations:
                 for example, if we rotate by 10 spaces but the array length is 7, this is the same as rotating by 3 spaces since 10 = 7 + 3, we get the remainder 3
                 another example, if we rotate 21 spaces but the array length is 7, this is the same as a full rotation 3 times so the result is the original array 
         '''
+        if n == 0:
+            return []
+        
         k = k % n
         # reverse the entire array so that the order of sub arrays can be flipped from A + B to B' + A'.
         # this puts the elements in the reverse order of what we need, but sets us up for the next two reversals which 'undo' the reversal of the elements in each section
         arr.reverse()
 
         #reverse the first k elements - these are the k-shift number of elements that got rotated to the front, we just need to put them back in ascencding order 
-        arr[:k].reversed(arr[:k])
+        arr[:k] = list(reversed(arr[:k]))
 
         # reverse the remaining elements - these are the n-k shift number of elements that got shifted k spots to the right, we just need to put them back in order 
-        arr[k:].reversed(arr[k:])
+        arr[k:]= list(reversed(arr[k:]))
 
         return arr
 
