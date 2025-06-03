@@ -46,12 +46,6 @@ class ProblemTracker:
             with open(self.data_file, 'r') as f:
                 return json.load(f)
         else:
-    def _load_problems(self):
-        """Load problems from file or create default database"""
-        if self.data_file.exists():
-            with open(self.data_file, 'r') as f:
-                return json.load(f)
-        else:
             # Create default problem database based on what we've implemented
             default_problems = {
                 "arrays": {
@@ -396,9 +390,17 @@ class ProblemTracker:
         print(f"📁 File: {problem['file']}")
         print(f"⚙️  Method: {problem['method']}")
         
-        # Show file path
-        practice_path = self.base_dir / "Practice" / problem['category'].replace('_', ' ').title() / problem['file']
-        solutions_path = self.base_dir / "Solutions" / problem['category'].replace('_', ' ').title() / problem['file']
+        # Show file path with directory name handling
+        category_dir_map = {
+            'stacks_queues': 'Stacks+Queues',
+            'hashmaps': 'Hashmap+Sets',
+            'sliding_window': 'SlidingWindow+TwoPointer',
+            'linked_lists': 'Linked Lists',
+            'arrays': 'Arrays'
+        }
+        dir_name = category_dir_map.get(problem['category'], problem['category'].replace('_', ' ').title())
+        practice_path = self.base_dir / "Practice" / dir_name / problem['file']
+        solutions_path = self.base_dir / "Solutions" / dir_name / problem['file']
         
         print(f"\n📂 PRACTICE FILES:")
         if practice_path.exists():

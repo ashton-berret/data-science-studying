@@ -1,0 +1,16 @@
+{
+  "total_problems_solved": 1,
+  "problems_by_category": {
+    "arrays": 1
+  },
+  "problems_by_difficulty": {
+    "Easy": 1,
+    "Medium": 0,
+    "Hard": 0
+  },
+  "last_practiced": {
+    "arrays:Two Sum": "2025-06-03"
+  },
+  "practice_streak": 1,
+  "last_practice_date": "2025-06-03"
+}

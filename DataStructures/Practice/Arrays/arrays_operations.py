@@ -60,11 +60,8 @@ class ArrayOperations:
         '''find two numbers that add up to the target.
             
             Q) What is the time and space complexity?
-                a)
             Q) What are the mappings in the seen dictionary?
-                a)
             Q) What is the key variable we need to define in addition to the parameter target variable?
-                a)
         '''
 
     @staticmethod

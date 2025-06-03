@@ -1,0 +1,244 @@
+{
+  "arrays": {
+    "description": "Array manipulation and searching algorithms",
+    "problems": [
+      {
+        "name": "Two Sum",
+        "difficulty": "Easy",
+        "description": "Find two numbers that add up to target",
+        "file": "arrays_operations.py",
+        "method": "two_sum"
+      },
+      {
+        "name": "Binary Search",
+        "difficulty": "Easy",
+        "description": "Search for target in sorted array",
+        "file": "arrays_operations.py",
+        "method": "binary_search"
+      },
+      {
+        "name": "Merge Sorted Arrays",
+        "difficulty": "Easy",
+        "description": "Merge two sorted arrays in-place",
+        "file": "arrays_operations.py",
+        "method": "merge_sorted_arrays"
+      },
+      {
+        "name": "Remove Duplicates",
+        "difficulty": "Easy",
+        "description": "Remove duplicates from sorted array in-place",
+        "file": "arrays_operations.py",
+        "method": "remove_duplicates"
+      },
+      {
+        "name": "Search Insert Position",
+        "difficulty": "Easy",
+        "description": "Find position where target should be inserted",
+        "file": "arrays_operations.py",
+        "method": "search_insert_position"
+      },
+      {
+        "name": "First and Last Position",
+        "difficulty": "Medium",
+        "description": "Find first and last position of target in sorted array",
+        "file": "arrays_operations.py",
+        "method": "find_first_and_last_position"
+      }
+    ]
+  },
+  "sliding_window": {
+    "description": "Sliding window pattern problems",
+    "problems": [
+      {
+        "name": "Maximum Subarray Sum (Fixed Size)",
+        "difficulty": "Easy",
+        "description": "Find maximum sum of k consecutive elements",
+        "file": "sliding_window_operations.py",
+        "method": "max_sum_subarray_fixed"
+      },
+      {
+        "name": "Longest Substring Without Repeating",
+        "difficulty": "Medium",
+        "description": "Find length of longest substring without repeating characters",
+        "file": "sliding_window_operations.py",
+        "method": "length_of_longest_substring"
+      },
+      {
+        "name": "Minimum Window Substring",
+        "difficulty": "Hard",
+        "description": "Find minimum window containing all characters of pattern",
+        "file": "sliding_window_operations.py",
+        "method": "min_window_substring"
+      },
+      {
+        "name": "Sliding Window Maximum",
+        "difficulty": "Hard",
+        "description": "Find maximum in each sliding window of size k",
+        "file": "sliding_window_operations.py",
+        "method": "sliding_window_maximum"
+      },
+      {
+        "name": "Permutation in String",
+        "difficulty": "Medium",
+        "description": "Check if string contains permutation of pattern",
+        "file": "sliding_window_operations.py",
+        "method": "check_inclusion"
+      }
+    ]
+  },
+  "hashmaps": {
+    "description": "HashMap and HashSet problems",
+    "problems": [
+      {
+        "name": "Valid Anagram",
+        "difficulty": "Easy",
+        "description": "Check if two strings are anagrams",
+        "file": "hashmap_operations.py",
+        "method": "is_anagram"
+      },
+      {
+        "name": "Group Anagrams",
+        "difficulty": "Medium",
+        "description": "Group strings that are anagrams of each other",
+        "file": "hashmap_operations.py",
+        "method": "group_anagrams"
+      },
+      {
+        "name": "Top K Frequent Elements",
+        "difficulty": "Medium",
+        "description": "Find k most frequent elements in array",
+        "file": "hashmap_operations.py",
+        "method": "top_k_frequent"
+      },
+      {
+        "name": "Intersection of Arrays",
+        "difficulty": "Easy",
+        "description": "Find intersection of two arrays",
+        "file": "hashmap_operations.py",
+        "method": "intersection"
+      },
+      {
+        "name": "Contains Duplicate",
+        "difficulty": "Easy",
+        "description": "Check if array contains duplicates",
+        "file": "hashmap_operations.py",
+        "method": "contains_duplicate"
+      },
+      {
+        "name": "Longest Consecutive Sequence",
+        "difficulty": "Medium",
+        "description": "Find length of longest consecutive sequence",
+        "file": "hashmap_operations.py",
+        "method": "longest_consecutive"
+      }
+    ]
+  },
+  "stacks_queues": {
+    "description": "Stack and Queue problems",
+    "problems": [
+      {
+        "name": "Valid Parentheses",
+        "difficulty": "Easy",
+        "description": "Check if parentheses are properly balanced",
+        "file": "stacks_queues_operations.py",
+        "method": "valid_parentheses"
+      },
+      {
+        "name": "Daily Temperatures",
+        "difficulty": "Medium",
+        "description": "Find days until warmer temperature",
+        "file": "stacks_queues_operations.py",
+        "method": "daily_temperatures"
+      },
+      {
+        "name": "Evaluate Postfix Expression",
+        "difficulty": "Medium",
+        "description": "Evaluate postfix mathematical expression",
+        "file": "stacks_queues_operations.py",
+        "method": "evaluate_postfix"
+      },
+      {
+        "name": "Implement Stack with Queues",
+        "difficulty": "Easy",
+        "description": "Implement stack using only queue operations",
+        "file": "stacks_queues_operations.py",
+        "method": "implement_stack_using_queues"
+      },
+      {
+        "name": "Implement Queue with Stacks",
+        "difficulty": "Easy",
+        "description": "Implement queue using only stack operations",
+        "file": "stacks_queues_operations.py",
+        "method": "implement_queue_using_stacks"
+      },
+      {
+        "name": "Sliding Window Maximum",
+        "difficulty": "Hard",
+        "description": "Find maximum in sliding window using deque",
+        "file": "stacks_queues_operations.py",
+        "method": "sliding_window_maximum"
+      }
+    ]
+  },
+  "linked_lists": {
+    "description": "Linked List manipulation problems",
+    "problems": [
+      {
+        "name": "Reverse Linked List",
+        "difficulty": "Easy",
+        "description": "Reverse a singly linked list",
+        "file": "linked_lists_operations.py",
+        "method": "reverse_linked_list"
+      },
+      {
+        "name": "Linked List Cycle Detection",
+        "difficulty": "Easy",
+        "description": "Detect if linked list has a cycle",
+        "file": "linked_lists_operations.py",
+        "method": "has_cycle"
+      },
+      {
+        "name": "Find Cycle Start",
+        "difficulty": "Medium",
+        "description": "Find where cycle begins in linked list",
+        "file": "linked_lists_operations.py",
+        "method": "find_cycle_start"
+      },
+      {
+        "name": "Merge Two Sorted Lists",
+        "difficulty": "Easy",
+        "description": "Merge two sorted linked lists",
+        "file": "linked_lists_operations.py",
+        "method": "merge_two_sorted_lists"
+      },
+      {
+        "name": "Remove Nth From End",
+        "difficulty": "Medium",
+        "description": "Remove nth node from end of list",
+        "file": "linked_lists_operations.py",
+        "method": "remove_nth_from_end"
+      },
+      {
+        "name": "Palindrome Linked List",
+        "difficulty": "Easy",
+        "description": "Check if linked list is palindrome",
+        "file": "linked_lists_operations.py",
+        "method": "is_palindrome"
+      },
+      {
+        "name": "Add Two Numbers",
+        "difficulty": "Medium",
+        "description": "Add numbers represented as linked lists",
+        "file": "linked_lists_operations.py",
+        "method": "add_two_numbers"
+      },
+      {
+        "name": "Intersection of Two Lists",
+        "difficulty": "Easy",
+        "description": "Find intersection point of two linked lists",
+        "file": "linked_lists_operations.py",
+        "method": "intersection_of_two_lists"
+      }
+    ]
+  }
+}
