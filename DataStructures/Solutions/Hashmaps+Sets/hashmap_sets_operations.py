@@ -230,6 +230,44 @@ class HashMapSetOperations:
 
         return freq 
     
+    @staticmethod
+    def longest_consecutive_sequence(nums):
+        '''
+            Find the length of the longest consecutive elements in sequence
+
+            Args:
+                nums: list of integers (unsorted, may have duplicates)
+            
+            Returns:
+                length of the longest consecutive sequence
+
+            Q) What is the time and space complexity?
+                a) Time complexity is O(n)
+                a) Space complexity is O(n)
+        '''
+
+        if not nums:
+            return 0
+
+        # convert to set for o(1) lookup
+        num_set = set(nums)
+        longest_streak = 0
+
+        for num in num_set:
+            # only start counting if this is the beginning of a sequence
+            # i.e., num-1 is not in the set
+            if num - 1 not in num_set:
+                current_num = num
+                current_streak = 1
+
+                # count consecutive numbers
+                while current_num + 1 in num_set:
+                    current_num += 1
+                    current_streak += 1
+                
+                longest_streak = max(longest_streak, current_streak)
+        
+        return longest_streak
 
     @staticmethod
     def is_anagram(s1, s2):

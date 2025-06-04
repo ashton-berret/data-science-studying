@@ -84,6 +84,115 @@ def test_find_element():
     
     print("✓ find_element tests passed")
 
+def test_binary_search():
+    """Test binary_search function"""
+    print("Step 1: Testing basic binary search...")
+    
+    arr = [1, 3, 5, 7, 9, 11, 13]
+    result = ArrayOperations.binary_search(arr, 7)
+    print(f"   binary_search([1, 3, 5, 7, 9, 11, 13], 7) = {result} (expected: 3)")
+    assert result == 3, f"Expected 3, got {result}"
+    
+    result = ArrayOperations.binary_search(arr, 1)
+    print(f"   binary_search([1, 3, 5, 7, 9, 11, 13], 1) = {result} (expected: 0)")
+    assert result == 0, f"Expected 0, got {result}"
+    
+    result = ArrayOperations.binary_search(arr, 13)
+    print(f"   binary_search([1, 3, 5, 7, 9, 11, 13], 13) = {result} (expected: 6)")
+    assert result == 6, f"Expected 6, got {result}"
+    
+    print("\nStep 2: Testing element not found...")
+    result = ArrayOperations.binary_search(arr, 6)
+    print(f"   binary_search([1, 3, 5, 7, 9, 11, 13], 6) = {result} (expected: -1)")
+    assert result == -1, f"Expected -1, got {result}"
+    
+    print("\nStep 3: Testing empty array...")
+    result = ArrayOperations.binary_search([], 5)
+    print(f"   binary_search([], 5) = {result} (expected: -1)")
+    assert result == -1, f"Expected -1, got {result}"
+    
+    print("✓ binary_search tests passed")
+
+def test_merge_sorted_arrays():
+    """Test merge_sorted_arrays function"""
+    print("Step 1: Testing basic merge...")
+    
+    nums1 = [1, 2, 3, 0, 0, 0]
+    nums2 = [2, 5, 6]
+    ArrayOperations.merge_sorted_arrays(nums1, 3, nums2, 3)
+    print(f"   merge_sorted_arrays([1,2,3,0,0,0], 3, [2,5,6], 3) = {nums1}")
+    print(f"   Expected: [1, 2, 2, 3, 5, 6]")
+    assert nums1 == [1, 2, 2, 3, 5, 6], f"Expected [1, 2, 2, 3, 5, 6], got {nums1}"
+    
+    print("\nStep 2: Testing nums1 larger...")
+    nums1 = [1, 2, 3, 4, 5, 0, 0]
+    nums2 = [6, 7]
+    ArrayOperations.merge_sorted_arrays(nums1, 5, nums2, 2)
+    print(f"   merge_sorted_arrays([1,2,3,4,5,0,0], 5, [6,7], 2) = {nums1}")
+    print(f"   Expected: [1, 2, 3, 4, 5, 6, 7]")
+    assert nums1 == [1, 2, 3, 4, 5, 6, 7], f"Expected [1, 2, 3, 4, 5, 6, 7], got {nums1}"
+    
+    print("\nStep 3: Testing nums2 larger...")
+    nums1 = [4, 5, 6, 0, 0, 0]
+    nums2 = [1, 2, 3]
+    ArrayOperations.merge_sorted_arrays(nums1, 3, nums2, 3)
+    print(f"   merge_sorted_arrays([4,5,6,0,0,0], 3, [1,2,3], 3) = {nums1}")
+    print(f"   Expected: [1, 2, 3, 4, 5, 6]")
+    assert nums1 == [1, 2, 3, 4, 5, 6], f"Expected [1, 2, 3, 4, 5, 6], got {nums1}"
+    
+    print("✓ merge_sorted_arrays tests passed")
+
+def test_search_insert():
+    """Test search_insert function"""
+    print("Step 1: Testing target found...")
+    
+    nums = [1, 3, 5, 6]
+    result = ArrayOperations.search_insert(nums, 5)
+    print(f"   search_insert([1, 3, 5, 6], 5) = {result} (expected: 3)")
+    assert result == 3, f"Expected 3, got {result}"
+    
+    print("\nStep 2: Testing target not found - insert middle...")
+    result = ArrayOperations.search_insert(nums, 2)
+    print(f"   search_insert([1, 3, 5, 6], 2) = {result} (expected: 1)")
+    assert result == 1, f"Expected 1, got {result}"
+    
+    print("\nStep 3: Testing target not found - insert end...")
+    result = ArrayOperations.search_insert(nums, 7)
+    print(f"   search_insert([1, 3, 5, 6], 7) = {result} (expected: 4)")
+    assert result == 4, f"Expected 4, got {result}"
+    
+    print("\nStep 4: Testing target not found - insert beginning...")
+    result = ArrayOperations.search_insert(nums, 0)
+    print(f"   search_insert([1, 3, 5, 6], 0) = {result} (expected: 0)")
+    assert result == 0, f"Expected 0, got {result}"
+    
+    print("✓ search_insert tests passed")
+
+def test_search_range():
+    """Test search_range function"""
+    print("Step 1: Testing target found with duplicates...")
+    
+    nums = [5, 7, 7, 8, 8, 10]
+    result = ArrayOperations.search_range(nums, 8)
+    print(f"   search_range([5, 7, 7, 8, 8, 10], 8) = {result} (expected: [3, 4])")
+    assert result == [3, 4], f"Expected [3, 4], got {result}"
+    
+    result = ArrayOperations.search_range(nums, 7)
+    print(f"   search_range([5, 7, 7, 8, 8, 10], 7) = {result} (expected: [1, 2])")
+    assert result == [1, 2], f"Expected [1, 2], got {result}"
+    
+    print("\nStep 2: Testing target found single occurrence...")
+    result = ArrayOperations.search_range(nums, 5)
+    print(f"   search_range([5, 7, 7, 8, 8, 10], 5) = {result} (expected: [0, 0])")
+    assert result == [0, 0], f"Expected [0, 0], got {result}"
+    
+    print("\nStep 3: Testing target not found...")
+    result = ArrayOperations.search_range(nums, 6)
+    print(f"   search_range([5, 7, 7, 8, 8, 10], 6) = {result} (expected: [-1, -1])")
+    assert result == [-1, -1], f"Expected [-1, -1], got {result}"
+    
+    print("✓ search_range tests passed")
+
 def test_reverse_array():
     """Test reverse_array function"""
     print("Step 1: Testing odd length array...")
@@ -347,7 +456,11 @@ def run_all_tests():
     print("="*70)
     
     tests = [
-        ("Find Element", test_find_element),
+        ("Find Element (Linear Search)", test_find_element),
+        ("Binary Search", test_binary_search),
+        ("Merge Sorted Arrays", test_merge_sorted_arrays),
+        ("Search Insert Position", test_search_insert),
+        ("Search Range", test_search_range),
         ("Reverse Array", test_reverse_array),
         ("Find Max Min", test_find_max_min),
         ("Remove Duplicates", test_remove_duplicates),

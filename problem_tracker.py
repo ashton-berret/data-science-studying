@@ -92,6 +92,27 @@ class ProblemTracker:
                             "description": "Find first and last position of target in sorted array",
                             "file": "arrays_operations.py",
                             "method": "find_first_and_last_position"
+                        },
+                        {
+                            "name": "Linear Search",
+                            "difficulty": "Easy",
+                            "description": "Find the index of a target element in an unsorted array",
+                            "file": "arrays_operations.py",
+                            "method": "find_element"
+                        },
+                        {
+                            "name": "Find Maximum and Minimum",
+                            "difficulty": "Easy",
+                            "description": "Find both the maximum and minimum elements in array in a single pass.",
+                            "file": "arrays_operations.py",
+                            "method": "find_min_max"
+                        },
+                        {
+                            "name": "Kadane's Algorithm with Indices",
+                            "difficulty": "Medium",
+                            "description": "Find the maximum sum subarray and return both the sum and the start/end indices of the subarray.",
+                            "file": "arrays_operations.py",
+                            "method": "kadanes_with_subarray"
                         }
                     ]
                 },
@@ -99,11 +120,18 @@ class ProblemTracker:
                     "description": "Sliding window pattern problems",
                     "problems": [
                         {
-                            "name": "Maximum Subarray Sum (Fixed Size)",
+                            "name": "Maximum Subarray Sum",
                             "difficulty": "Easy",
                             "description": "Find maximum sum of k consecutive elements",
                             "file": "sliding_window_operations.py",
-                            "method": "max_sum_subarray_fixed"
+                            "method": "max_sum_subarray_of_size_k"
+                        },
+                        {
+                            "name": "Minimum Subarray Sum",
+                            "difficulty": "Easy",
+                            "description": "Find the minimal length of a contiguous subarray whose sum is greater than or equal to the target.",
+                            "file": "sliding_window_operations.py",
+                            "method": "smallest_subarray_with_given_sum"
                         },
                         {
                             "name": "Longest Substring Without Repeating",
@@ -111,6 +139,34 @@ class ProblemTracker:
                             "description": "Find length of longest substring without repeating characters",
                             "file": "sliding_window_operations.py", 
                             "method": "length_of_longest_substring"
+                        },
+                        {
+                            "name": "Longest Substring with K distincts",
+                            "difficulty": "Medium",
+                            "description": "Find the lenght of the longest substring that contains at most k distinct characters",
+                            "file": "sliding_window_operations.py",
+                            "method": "longest_substring_with_k_distinct"
+                        },
+                        {
+                            "name": "Fruits into Baskets",
+                            "difficulty": "Medium",
+                            "description": "Pick fruits from trees in baskets (one fruit type per basket). Find the maximum number of fruits you can collect with two baskets",
+                            "file": "sliding_window_operations.py",
+                            "method": "fruits_into_baskets"
+                        },
+                        {
+                            "name": "Find all anagrams",
+                            "difficulty": "Medium",
+                            "description": "Given two strings, return an array of all the start indices of s1's anagrams in s2",
+                            "file": "sliding_window_operations.py",
+                            "method": "find_all_anagrams"
+                        },
+                        {
+                            "name": "Longest Repeating Character Replacement",
+                            "difficulty": "Medium",
+                            "description": "Find the length of the longest substring with the same characters after replacing at most k characters.",
+                            "file": "sliding_window_operations.py",
+                            "method": "longest_repeating_character_replacement"
                         },
                         {
                             "name": "Minimum Window Substring",
@@ -174,11 +230,60 @@ class ProblemTracker:
                             "method": "contains_duplicate"
                         },
                         {
+                            "name": "Find all duplicates",
+                            "difficulty": "Medium",
+                            "description": "Find all the elements that appear twice in an array",
+                            "file": "hashmap_operations.py",
+                            "method": "find_all_duplicates"
+                        },
+                        {
+                            "name": "Union of Arrays",
+                            "difficulty": "Easy",
+                            "description": "Find the union of two arrays (all unique elements)",
+                            "file": "hashmap_operations.py",
+                            "method": "union_of_arrays"
+                        },
+                        {
+                            "name": "Character Frequency Count",
+                            "difficulty": "Easy",
+                            "description": "Count the frequency of each character in a string and return as a hashmap",
+                            "file": "hashmap_operations.py",
+                            "method": "character_frequency"
+                        },
+                        {
+                            "name": "First Non-Repeating Character",
+                            "difficulty": "Easy",
+                            "description": "Find the first character in a string that doesn't repeat. Return its index or -1",
+                            "file": "hashmap_operations.py",
+                            "method": "first_non_repeating_character"
+                        },
+                        {
                             "name": "Longest Consecutive Sequence",
                             "difficulty": "Medium",
                             "description": "Find length of longest consecutive sequence",
                             "file": "hashmap_operations.py",
                             "method": "longest_consecutive"
+                        },
+                        {
+                            "name": "Subarray Sum Equals K",
+                            "difficulty": "Medium",
+                            "description": "Find the total number of continuous subarrays whose sum equals k",
+                            "file": "hashmap_operations.py",
+                            "method": "subarray_sum_equals_k"
+                        },
+                        {
+                            "name": "4SumII",
+                            "difficulty": "Medium",
+                            "description": "Given four arrays, count tuples (i, j, k, l) such that A[i] + B[j] + C[k] + D[l] = 0",
+                            "file": "hashmap_operations.py",
+                            "method": "four_sum_count"
+                        },
+                        {
+                            "name": "Valid Sudoku",
+                            "difficulty": "Medium",
+                            "description": "Determine if a 9x9 sudoku board is valid (partially filled, checking existing numbers only)",
+                            "file": "hashmap_operations.py",
+                            "method": "valid_sudoku"
                         }
                     ]
                 },
@@ -226,6 +331,13 @@ class ProblemTracker:
                             "description": "Find maximum in sliding window using deque",
                             "file": "stacks_queues_operations.py",
                             "method": "sliding_window_maximum"
+                        },
+                        {
+                            "name": "First Negative in Window",
+                            "difficulty": "Easy",
+                            "description": "Find the first negative number in every window of size k in an array",
+                            "file": "stacks_queues_operations.py",
+                            "method": "first_negative_in_window"
                         }
                     ]
                 },
@@ -238,6 +350,13 @@ class ProblemTracker:
                             "description": "Reverse a singly linked list",
                             "file": "linked_lists_operations.py",
                             "method": "reverse_linked_list"
+                        },
+                        {
+                            "name": "Find Middle Node",
+                            "difficulty": "Easy",
+                            "description": "Find the middle node of a linked list. If even, return the second middle node",
+                            "file": "linked_lists_operations.py",
+                            "method": "find_middle_node"
                         },
                         {
                             "name": "Linked List Cycle Detection",
@@ -259,6 +378,13 @@ class ProblemTracker:
                             "description": "Merge two sorted linked lists",
                             "file": "linked_lists_operations.py",
                             "method": "merge_two_sorted_lists"
+                        },
+                        {
+                            "name": "Remove Duplicates from Sorted List",
+                            "difficulty": "Easy",
+                            "description": "Remove duplicate nodes from a sorted list, keeping only unique values",
+                            "file": "linked_lists_operations.py",
+                            "method":"remove_duplicates_sorted"
                         },
                         {
                             "name": "Remove Nth From End",
@@ -287,6 +413,13 @@ class ProblemTracker:
                             "description": "Find intersection point of two linked lists",
                             "file": "linked_lists_operations.py",
                             "method": "intersection_of_two_lists"
+                        },
+                        {
+                            "name": "Partition List",
+                            "difficulty": "Medium",
+                            "description": "Partition a linked list around value x, with all nodes < x before nodes >= x",
+                            "file": "linked_lists_operations.py",
+                            "method": "partition_list"
                         }
                     ]
                 }

@@ -133,8 +133,6 @@ class SlidingWindowOperations:
         
         return min_length if min_length != float('inf') else 0
 
-        
-
 
     @staticmethod 
     def longest_substring_with_k_distinct(s, k):
@@ -216,6 +214,221 @@ class SlidingWindowOperations:
             max_length = max(max_length, window_end - window_start + 1)
         return max_length
 
+    @staticmethod
+    def min_window(s, t):
+        '''
+            Find the minimum window substring in s that contains all characters of t
+            
+            Args:
+                s: input string 
+                t: pattern string containing characters that must be included
+            Returns:
+                minimum window substring or empty string if no valid window exists
+                
+            Q) What is the time and space complexity?
+                a) O(|s| + |t|) time complexity where |s| and |t| are lengths of strings
+                a) O(|t|) space complexity for storing character frequencies
+            Q) What are the two key frequency maps we maintain?
+                a) pattern_freq: frequency of characters in pattern t
+                a) window_freq: frequency of characters in current window
+            Q) What does the 'formed' variable track and why is it important?
+                a) tracks how many unique characters in current window have desired frequency from pattern
+                a) when formed == required, we have a valid window
+                
+            Example Walkthrough) s = "ADOBECODEBANC", t = "ABC"
+            1. initialize pattern_freq = {A:1, B:1, C:1}, required = 3
+            2. expand window until we find valid window containing A,B,C
+            3. once valid window found, try to contract from left to find minimum
+            4. keep track of minimum window seen so far
+            5. continue until right pointer reaches end
+            6. return minimum window substring found
+        '''
+        if not s or not t or len(s) < len(t):
+            return ""
+        
+        # frequency map for characters in pattern t
+        pattern_freq = {}
+        for char in t:
+            pattern_freq[char] = pattern_freq.get(char, 0) + 1
+        
+        # number of unique characters in t that need to be present in window with desired frequency
+        required = len(pattern_freq)
+        
+        # sliding window pointers
+        left = right = 0
+        
+        # formed tracks how many unique characters in current window have desired frequency
+        formed = 0
+        
+        # frequency map for current window
+        window_freq = {}
+        
+        # result: (window length, left, right)
+        result = float("inf"), None, None
+        
+        while right < len(s):
+            # add character from right to window
+            char = s[right]
+            window_freq[char] = window_freq.get(char, 0) + 1
+            
+            # if frequency of current character matches desired count in pattern, increment formed
+            if char in pattern_freq and window_freq[char] == pattern_freq[char]:
+                formed += 1
+            
+            # try to contract window until it ceases to be 'desirable'
+            while left <= right and formed == required:
+                char = s[left]
+                
+                # save smallest window until now
+                if right - left + 1 < result[0]:
+                    result = (right - left + 1, left, right)
+                
+                # character at left pointer is no longer part of window
+                window_freq[char] -= 1
+                if char in pattern_freq and window_freq[char] < pattern_freq[char]:
+                    formed -= 1
+                
+                # move left pointer ahead for next iteration
+                left += 1    
+            
+            # keep expanding window by moving right pointer
+            right += 1    
+        
+        # return empty string if no valid window found, otherwise return minimum window
+        return "" if result[0] == float("inf") else s[result[1] : result[2] + 1]
+
+    @staticmethod
+    def max_sliding_window(nums, k):
+        '''
+            Find the maximum value in each sliding window of size k
+            
+            Args:
+                nums: input array of integers
+                k: size of sliding window
+            Returns:
+                list of maximum values for each window position
+                
+            Q) What is the time and space complexity?
+                a) O(n) time complexity - each element is added and removed at most once
+                a) O(k) space complexity for the deque
+            Q) What data structure do we use and why?
+                a) deque (double-ended queue) to maintain indices in decreasing order of values
+                a) allows O(1) insertion/deletion from both ends
+            Q) What do we store in the deque - values or indices? Why?
+                a) indices, because we need to check if elements are still within current window
+                a) we can get values using indices but not vice versa
+                
+            Example Walkthrough) nums = [1,3,-1,-3,5,3,6,7], k = 3
+            1. window [1,3,-1]: deque=[1] (index of 3), max = 3
+            2. window [3,-1,-3]: deque=[1] (index of 3), max = 3  
+            3. window [-1,-3,5]: deque=[4] (index of 5), max = 5
+            4. window [-3,5,3]: deque=[4,5] (indices of 5,3), max = 5
+            5. window [5,3,6]: deque=[6] (index of 6), max = 6
+            6. window [3,6,7]: deque=[7] (index of 7), max = 7
+            7. return [3,3,5,5,6,7]
+        '''
+        if not nums or k <= 0:
+            return []
+        
+        from collections import deque
+        
+        # deque stores indices of array elements in decreasing order of their values
+        # front of deque always contains index of maximum element in current window
+        dq = deque()
+        result = []
+        
+        for i in range(len(nums)):
+            # remove indices that are out of current window from front of deque
+            while dq and dq[0] < i - k + 1:
+                dq.popleft()
+            
+            # remove indices whose corresponding values are smaller than current element
+            # from back of deque (maintain decreasing order)
+            while dq and nums[dq[-1]] < nums[i]:
+                dq.pop()
+            
+            # add current element index to back of deque
+            dq.append(i)
+            
+            # if we have processed at least k elements, add maximum to result
+            # maximum is always at front of deque
+            if i >= k - 1:
+                result.append(nums[dq[0]])
+        
+        return result
+
+    @staticmethod
+    def check_inclusion(s1, s2):
+        '''
+            Check if string s2 contains any permutation of string s1
+            
+            Args:
+                s1: pattern string whose permutation we're looking for
+                s2: string to search in
+            Returns:
+                True if s2 contains any permutation of s1, False otherwise
+                
+            Q) What is the time and space complexity?
+                a) O(|s1| + |s2|) time complexity 
+                a) O(|s1|) space complexity for frequency maps
+            Q) How is this problem similar to finding anagrams?
+                a) permutation is essentially an anagram, so we're finding if any anagram of s1 exists in s2
+                a) we use the same sliding window + frequency matching approach
+            Q) What condition indicates we found a valid permutation?
+                a) when window size equals s1 length AND all character frequencies match
+                a) this means current window is an anagram/permutation of s1
+                
+            Example Walkthrough) s1 = "ab", s2 = "eidbaooo"
+            1. pattern_freq = {a:1, b:1}, need window of size 2
+            2. window "ei": freq = {e:1, i:1}, no match
+            3. window "id": freq = {i:1, d:1}, no match  
+            4. window "db": freq = {d:1, b:1}, no match
+            5. window "ba": freq = {b:1, a:1}, matches pattern_freq!
+            6. return True (found permutation "ba" of "ab")
+        '''
+        if not s1 or not s2 or len(s1) > len(s2):
+            return False
+        
+        # frequency map for pattern s1
+        pattern_freq = {}
+        for char in s1:
+            pattern_freq[char] = pattern_freq.get(char, 0) + 1
+        
+        # sliding window variables
+        window_start = 0
+        window_freq = {}
+        matched = 0  # number of characters matched between window and pattern
+        
+        for window_end in range(len(s2)):
+            right_char = s2[window_end]
+            
+            # add character to window frequency
+            window_freq[right_char] = window_freq.get(right_char, 0) + 1
+            
+            # if character frequency matches pattern, increment matched count
+            if right_char in pattern_freq and window_freq[right_char] == pattern_freq[right_char]:
+                matched += 1
+            
+            # if window size exceeds s1 length, shrink from left
+            if window_end - window_start + 1 > len(s1):
+                left_char = s2[window_start]
+                
+                # if leaving character was matched, decrement matched count
+                if left_char in pattern_freq and window_freq[left_char] == pattern_freq[left_char]:
+                    matched -= 1
+                
+                # remove character from window
+                window_freq[left_char] -= 1
+                if window_freq[left_char] == 0:
+                    del window_freq[left_char]
+                
+                window_start += 1
+            
+            # if all characters are matched and window size equals s1 length, found permutation
+            if matched == len(pattern_freq) and window_end - window_start + 1 == len(s1):
+                return True
+        
+        return False
 
     @staticmethod
     def fruits_into_baskets(fruits):
@@ -566,6 +779,7 @@ class SlidingWindowOperations:
 
 
 
+        
 
 
 

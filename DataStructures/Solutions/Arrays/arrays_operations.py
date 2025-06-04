@@ -6,14 +6,168 @@ class ArrayOperations:
 
     @staticmethod
     def find_element(arr, target):
-        '''Linear search in an array 
-            Q) What is the time complexity?
-                a) O(n)
+        '''
+            Linear search in an array 
+                Q) What is the time complexity?
+                    a) O(n)
         '''
         for i, element in enumerate(arr):
             if element == target:
                 return i 
         return -1
+    
+    @staticmethod
+    def binary_search(arr, target):
+        '''
+            Search for a target in sorted array using binary search
+
+            Args:
+                arr: sotrted list of integers
+                target: the integer to search for
+
+            Returns:
+                index of target if found, -1 if otherwise
+
+            Q) What is the time and space complexity?
+                a) Time complexity is O(log n)
+                a) Space complexity is O(1)
+        '''
+
+        left = 0
+        right = len(arr) - 1
+
+        while left <= right:
+            mid = left + (right - left) // 2
+
+            if arr[mid] == target:
+                return mid
+            elif arr[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return -1
+
+    @staticmethod
+    def merge_sorted_arrays(nums1, m, nums2, n):
+        '''
+            Merge nums2 into nums1 in-place. nums1 has size m+n with m elements
+
+            Args:
+                num1s: List with m elements followed by n zeros
+                m: number of elements in nums1
+                nums2: list with n elements
+                n: number of elements in nums2
+
+            Q) What is the time and space complexity?
+                a) Time complexity is O(m + n)
+                a) Space complexity is O(1)
+        '''
+
+        # start from the end and work backwards
+        i = m - 1 # last element in nums1
+        j = n - 1 # last element in nums2
+        k = m + n - 1 # last position in nums1
+
+        # merge from the back
+        while j >= 0:
+            if i >= 0 and nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+            else:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+
+    @staticmethod
+    def search_insert(nums, target):
+        '''
+            Find the index where the target should be inserted to keep the array sorted
+
+            Args:
+                nums: sorted list of integers
+                target: the integer to insert
+
+            Returns:
+                the index where the target should be inserted
+
+            Q) What is the space and come complexity?
+                a) Time complexity is O(log n)
+                a) Space complexity is O(1)
+        '''
+
+        left = 0
+        right = len(nums)
+
+        while left < right:
+            mid = left + (right - left) // 2
+
+            if nums[mid] <= target:
+                left = mid + 1
+            else:
+                right = mid
+
+        return left
+        
+
+    @staticmethod
+    def search_range(nums, target):
+        '''
+            Find the first and last position of target in a sorted array
+
+            Args:
+                nums: sorted list of integers (may have duplicates)
+                target: integer to search for
+
+            Returns:
+                [first_index, last_index] or [-1, -1] if not found
+
+            Q) What is the time and space complexity?
+                a) Time complexity is O(log n)
+                a) Space complexity is O(1)
+        '''
+
+        def find_first(nums, target):
+            left = 0
+            right = len(nums) - 1
+            first_pos = -1
+
+            while left <= right:
+                mid = left + (right - left) // 2
+
+                if nums[mid] == target:
+                    first_pos = mid
+                    right = mid - 1 # continue searching left
+                elif nums[mid] <= target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+            
+            return first_pos
+
+        def find_last(nums, target):
+            left = 0
+            right = len(nums) - 1
+            last_pos = -1
+
+            while left <= right:
+                mid = left + (right - left) // 2
+
+                if nums[mid] == target:
+                    last_pos = mid
+                    left = mid + 1 # continue searching right 
+                elif nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+
+            return last_pos
+
+        first = find_first(nums, target)
+        if first == -1:
+            return [-1, -1]
+        last = find_last(nums, target)
+        return [first, last]
 
     @staticmethod
     def reverse_array(arr):
