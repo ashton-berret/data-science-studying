@@ -29,14 +29,14 @@ class HeapsOperations:
                 None (modifies the array in place)
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n)
-                a) Space complexity is O(1) -> in place operation
+                a)
+                a)
             Q) What constitutes a min-heap?
-                a) Every parent is <= both of its children
+                a)
             Q) Why start from the last non-leaf node?
-                a) Leaf nodes are already valid heaps, we can work bottom up
+                a)
             Q) What is the difference between heapify and building heap by insertion?
-                a) Heapify is O(n), repeated insertion is O(n log n)
+                a)
 
             Example Walkthrough) arr = [4, 10, 3, 5, 1]
 
@@ -87,32 +87,9 @@ class HeapsOperations:
 
                     - arr = [1, 4, 3, 5, 10]
         '''
+        # Implement heapify_min here
+        pass
 
-        def _heapify_down(arr, n, i):
-            # i is the current element we are using as comparison in walkthrough above
-            smallest = i
-            left = 2 * i + 1
-            right = 2 * i + 2
-
-            if left < n and arr[left] <= arr[smallest]:
-                smallest = left
-            if right < n and arr[right] <= arr[smallest]:
-                smallest = right
-
-            if smallest != i:
-                arr[i], arr[smallest] = arr[smallest], arr[i]
-                _heapify_down(arr, n, smallest)
-
-
-        if not arr:
-            return arr
-
-        n = len(arr)
-        # start from the last non-leaf node and heapify down
-        for i in range(n // 2 - 1, -1, -1):
-            _heapify_down(arr, n, i)
-
-        return arr
 
     @staticmethod
     def heap_insert_min(heap, val):
@@ -127,12 +104,12 @@ class HeapsOperations:
                 none, modifies the heap in place
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(log n) -> buble up at most height levels
-                a) Space complexity is O(1) -> only using constant extra space
+                a)
+                a)
             Q) Why do we bubble up instead of down?
-                a) New element is added at the end, may violate the heap property with parent
+                a)
             Q) When do we stop bubbling up?
-                a) When parent is smaller (min-heap) or we reach root
+                a)
 
             Example Walkthrough) heap = [1, 4, 3, 5, 10], insert 2
                     TREE)
@@ -161,17 +138,8 @@ class HeapsOperations:
                 3. bubble up, 2 vs parent 1 at index 0, no swap needed
                 4. final is [1, 4, 2, 5, 10, 3]
         '''
-        heap.append(val)
-        i = len(heap) - 1
-
-        # bubble up
-        while i > 0:
-            parent = (i - 1) // 2
-            if heap[parent] <= heap[i]:
-                break
-            heap[parent], heap[i] = heap[i], heap[parent]
-            i = parent
-
+        # Implement heap_insert_min here
+        pass
 
 
     @staticmethod
@@ -186,12 +154,12 @@ class HeapsOperations:
                 min element, or None if heap is empty
 
             Q) What is time and space complexity?
-                a) Time complexity is O(log n) -> bubble down at most height levels
-                a) Space complexity is O(1)
+                a)
+                a)
             Q) Why can't we just take heap[0]?
-                a) This would work for peek, but extraction means removing the element and doing so would break the heap structure (left child would become root)
+                a)
             Q) Why do we move the last element to the root?
-                a) Maintains complete tree property, then we can fix the heap property
+                a)
 
             Example Walkthrough) heap = [1, 2, 3, 5, 10, 4]
                 1. save min = 1
@@ -201,37 +169,8 @@ class HeapsOperations:
                 4. bubble down: 4 vs children (5, 10) -> no swap needed
                 5. return 1
         '''
-
-        if not heap:
-            return None
-
-        min_val = heap[0]
-        if len(heap) == 1:
-            heap.pop()
-            return min_val
-
-        # move the last element to the root
-        heap[0] = heap.pop()
-
-        # bubble down
-        i = 0
-        while True:
-            smallest = i
-            left = 2 * i + 1
-            right = 2 * i + 2
-
-            if left < len(heap) and heap[left] < heap[smallest]:
-                smallest = left
-            if right < len(heap) and heap[right] < heap[smallest]:
-                smallest = right
-
-            if smallest == i:
-                break
-
-            heap[i], heap[smallest] = heap[smallest], heap[i]
-            i = smallest
-
-        return min_val
+        # Implement heap_extract_min here
+        pass
 
 
     @staticmethod
@@ -246,22 +185,15 @@ class HeapsOperations:
             Returns:
                 kth largest element
 
-
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log k) -> process n elements, maintain heap size of k
-                a) Space complexity is O(k) -> heap size
+                a)
+                a)
             Q) Why can't we just sort the array in reverse order, convert to hashmap to remove duplicates, and use k - 1 as the index lookup?
-                a) We can! Here are the pros and cons of each:
-                    1. Sorted hashmap:
-                        - simple
-                        - time complexity is O(n log n) -> works well when k > n / 2
-                    2. Heap:
-                        - more complex
-                        - time complexity is O(n log k) -> works well with smaller k's or when memory is more constrained
+                a)
             Q) Why do we use min heap instead of max heap?
-                a) Min heap of size k keeps the k largest elements, where the root is kth largest
+                a)
             Q) What if k > len(nums)?
-                a) Typically undefined, could return smallest element
+                a)
 
             Example Walkthrough) nums = [3, 2, 1, 5, 6, 4], k = 2
                 1. process 3 -> heap = [3]
@@ -272,16 +204,8 @@ class HeapsOperations:
                 6. process 4 -> heap = [5,6] --> not added
                 7. return heap[0] = 5
         '''
-        heap = []
-
-        for num in nums:
-            if len(heap) < k:
-                heapq.heappush(heap, num)
-            elif num > heap[0]:
-                heapq.heapreplace(heap, num)
-
-        return heap[0]
-
+        # Implement kth_largest_element here
+        pass
 
 
     @staticmethod
@@ -297,12 +221,12 @@ class HeapsOperations:
                 list of k most frequent elements
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log k) -> count frequencies (O(n)), heap operations (O(n log k))
-                a) Space complexity is O(n)
+                a)
+                a)
             Q) Why use min-heap for most frequent?
-                a) Min-heap of size k keeps k most frequent, efficiently removes least frequent
+                a)
             Q) Could we use max heap instead?
-                a) Yes, but we would need to process all the elements then extract k times
+                a)
 
             Example Walkthrough) nums = [1, 1, 1, 2, 2, 3], k = 2
                 1. count frequencies: {1:3, 2:2, 3:1}
@@ -311,17 +235,8 @@ class HeapsOperations:
                 4. process (3,1): heap = [(2,2), (3,1)] -> (1,3) not added since 1 < 2
                 5. extract values -> [2, 1]
         '''
-
-        freq_map = Counter(nums)
-        heap = []
-
-        for num, freq in freq_map.items():
-            if len(heap) < k:
-                heapq.heappush(heap, (freq, num))
-            elif freq > heap[0][0]:
-                heapq.heapreplace(heap, (freq, num))
-
-        return [num for freq, num in heap]
+        # Implement top_k_frequent_elements here
+        pass
 
 
     @staticmethod
@@ -336,12 +251,12 @@ class HeapsOperations:
                 ListNode head of merged sorted list
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log k) where n is total nodes, k is number of lists
-                a) Space complexity is O(k)
+                a)
+                a)
             Q) Why is this better than merging lists one by one?
-                a) Merging one by one is O(nk) compared to O(n log k)
+                a)
             Q) How do we handle empty lists?
-                a) Skip None heads when initializing heap
+                a)
 
             Example Walkthrough) lists = [[1,4,5], [1,3,4], [2,6]]
                 1. initialize heap with heads: [(1, list1), (1, list2), (2, list3)]
@@ -350,32 +265,8 @@ class HeapsOperations:
                 4. continue until all nodes are processed
                 5. result: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 5 -> 6
         '''
-
-        if not lists:
-            return None
-
-        heap = []
-        dummy = ListNode(0)
-        current = dummy
-
-        # initialize heap with first node from each list
-        for i, head in enumerate(lists):
-            if head:
-                heapq.heappush(heap, (head.val, i, head))
-
-        list_index = len(lists) # for unique identification
-
-        while heap:
-            val, idx, node = heapq.heappop(heap)
-            current.next = ListNode(val)
-            current = current.next
-
-            if node.next:
-                heapq.heappush(heap, (node.next.val, list_index, node.next))
-                list_index += 1
-
-        return dummy.next
-
+        # Implement merge_k_sorted_lists here
+        pass
 
 
     @staticmethod
@@ -390,12 +281,12 @@ class HeapsOperations:
                 minimum number of meeting rooms needed
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log n) -> sorting + heap operations
-                a) Space complxity is O(n) -> heap size in worst case
+                a)
+                a)
             Q) Why use min-heap for end times?
-                a) Track earliest ending meeting to see if the room becomes available
+                a)
             Q) When do we need a new room?
-                a) When current meeting starts before earliest meeting ends
+                a)
 
             Example Walkthrough) intervals = [[0, 30], [5,10], [15,20]]
                 1. Sort by start time: [[0, 30], [5,10], [15,20]]
@@ -404,23 +295,8 @@ class HeapsOperations:
                 4. meeting [15,20]: 15 > 10, heap = [20,30], rooms = 2
                 5. return 2
         '''
-
-        if not intervals:
-            return 0
-
-        # sort meetings by start time
-        intervals.sort(key=lambda x: x[0])
-        heap = []
-
-        for start, end in intervals:
-            # if earliest meeting ends before current starts, reuse the room
-            if heap and heap[0] <= start:
-                heapq.heappop(heap)
-
-            heapq.heappush(heap, end)
-
-        return len(heap)
-
+        # Implement meeting_rooms_ii here
+        pass
 
 
     @staticmethod
@@ -436,12 +312,12 @@ class HeapsOperations:
                 minimum time to complete all tasks
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(m log m) where m is unique tests
-                a) Space complexity is O(m) -> heap and frequency map
+                a)
+                a)
             Q) Why do we use max-heap for frequencies?
-                a) Execute most frequent tasks first to minimize wait time
+                a)
             Q) When do we add idle time?
-                a) When we can't fill all n+1 slots in a round
+                a)
 
             Example Walkthrough) tasks = ['A', 'A', 'A', 'B', 'B', 'B'], n = 2
                 1. frequencies: A:3, B:3
@@ -450,30 +326,8 @@ class HeapsOperations:
                 4. round 3, execute A -> B -> Idle, remaining a:0, b:0
                 5. total time = 8 (num tasks + idle time)
         '''
-
-        freq_map = Counter(tasks)
-        frequencies_max_heap = [-freq for freq in freq_map.values()]
-        heapq.heapify(frequencies_max_heap)
-
-        time = 0
-
-        while frequencies_max_heap:
-            cycle = []
-            # try to fill n+1 time slots
-            for i in range(n+1):
-                if frequencies_max_heap:
-                    freq = -heapq.heappop(frequencies_max_heap)
-                    if freq > 1:
-                        cycle.append(freq - 1)
-                    time += 1
-                elif cycle: # still have tasks to do but need idle time
-                    time += 1
-
-            # add remaining frequencies back to heap
-            for freq in cycle:
-                heapq.heappush(frequencies_max_heap, -freq)
-
-        return time
+        # Implement task_scheduler here
+        pass
 
 
     @staticmethod
@@ -489,13 +343,12 @@ class HeapsOperations:
                 list of maximum values in each window
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log k) - each element added/removed once
-                a) Space complexity is O(k)
+                a)
+                a)
             Q) Why store (value, index) pairs?
-                a) Need to track which elements are still in the current window
+                a)
             Q) How do we handle outdated maximums?
-                a) Remove elements from heap that are outside the current window
-
+                a)
 
             Q) Example Walkthrough) nums = [1, 3, -1, -3, 5, 3, 6, 7], k = 3
 
@@ -537,27 +390,8 @@ class HeapsOperations:
 
                 Final result: [3, 3, 5, 5, 6, 7]
         '''
-
-        if not nums or k == 0:
-            return []
-
-        max_heap = []
-        result = []
-
-        for i in range(len(nums)):
-            # add current element to heap
-            heapq.heappush(max_heap, (-nums[i], i))
-
-            # remove elements outside the current window
-            while max_heap and max_heap[0][1] <= i - k: # using [0][1] since we are referencing first element in heap, then getting the second element(idx) in that tuple
-                heapq.heappop(max_heap)
-
-            # if window is complete, add maximum to result
-            if i >= k -1:
-                result.append(-max_heap[0][0])
-
-        return result
-
+        # Implement sliding_window_maximum here
+        pass
 
 
     @staticmethod
@@ -573,12 +407,12 @@ class HeapsOperations:
                 list of k closest points
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log k) -> process n points, maintain heap of size k
-                a) Space complexity is O(k)
+                a)
+                a)
             Q) Why use max-heap for closest points?
-                a) Max heap of size k keeps k closes, efficiently removes farthest
+                a)
             Q) How do we calculate distance?
-                a) Use squared distance to avoid floating point operations
+                a)
 
             Example Walkthrough) points = [[1,1], [2,2], [3,3]], k = 1
                 1. point [1,1]: distance = 2, heap = [(2, [1,1])]
@@ -586,20 +420,8 @@ class HeapsOperations:
                 3. point [3,3]: distance = 18, don't add since 18 > 2
                 4. return [[1,1]]
         '''
-
-        def squared_distance(point):
-            return point[0] ** 2 + point[1] ** 2
-
-        max_heap = []
-        for point in points:
-            dist = squared_distance(point)
-
-            if len(max_heap) < k:
-                heapq.heappush(max_heap, (-dist, point))
-            elif dist <= -max_heap[0][0]:
-                heapq.heapreplace(max_heap, (-dist, point))
-
-        return [point for dist, point, in max_heap]
+        # Implement k_closest_points_to_origin here
+        pass
 
 
     @staticmethod
@@ -614,12 +436,12 @@ class HeapsOperations:
                 reorganized string, or empty string if impossible
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log m) where m is unique characters
-                a) Space complexity is O(m)
+                a)
+                a)
             Q) When is reorganization impossible?
-                a) When most frequent character appears more than (n+1)//2 times
+                a)
             Q) Why use max heap for frequencies?
-                a) Always try to place the most frequent characters first
+                a)
 
             Example Walkthrough) s = 'aab'
                 1. Frequencies = a:2, b:1
@@ -628,34 +450,8 @@ class HeapsOperations:
                 4. Place 'a': result 'aba', remaining=0
                 5. return 'aba'
         '''
-
-        freq_map = Counter(s)
-        max_heap = [(-freq, char) for char, freq in freq_map.items()]
-        heapq.heapify(max_heap)
-
-        result = []
-        prev_freq, prev_char = 0, ''
-
-        while max_heap:
-            # get the most frequent character
-            freq, char = heapq.heappop(max_heap)
-            freq = -freq
-
-            result.append(char)
-
-            # add back previous character if it still has frequency
-            if prev_freq > 0:
-                heapq.heappush(max_heap, (-prev_freq, prev_char))
-
-            # update previous character
-            prev_freq = freq - 1
-            prev_char = char
-
-        result_str = ''.join(result)
-        if len(result_str) == len(s):
-            return result_str
-        else:
-            return ""
+        # Implement reorganize_string here
+        pass
 
 
     @staticmethod
@@ -670,12 +466,12 @@ class HeapsOperations:
                 maximum CPU load at any point in time
 
             Q) What is the time and space complexity?
-                a) Time complexity is O(n log n)
-                a) Space complexity is O(n)
+                a)
+                a)
             Q) How do we keep track of overlapping jobs?
-                a) Min heap of end times with associated cpu loads
+                a)
             Q) When do we update maximum load?
-                a) After adding each new job and removing expired jobs
+                a)
 
             Example Walkthrough) jobs = [[1,4,3], [2,5,4], [7,9,6]]
                 1. sort by start: -> already sorted
@@ -684,32 +480,8 @@ class HeapsOperations:
                 4. job [7,9,6]: remove expired, heap = [(9,6)], current load = 6, max_load = 7
                 5. return 7
         '''
-
-        if not jobs:
-            return 0
-
-        # sort jobs by start time
-        jobs.sort(key=lambda x: x[0])
-
-        min_heap = [] # stores (end_time, cpu_load)
-        current_load = 0
-        max_load = 0
-
-        for start, end, cpu_load in jobs:
-            # remove jobs that have ended
-            while min_heap and min_heap[0][0] <= start:
-                _, load = heapq.heappop(min_heap)
-                current_load -= load
-
-            # add current job
-            heapq.heappush(min_heap, (end, cpu_load))
-            current_load += cpu_load
-
-            # update maximum load
-            max_load = max(max_load, current_load)
-
-        return max_load
-
+        # Implement maximum_cpu_load here
+        pass
 
 
     @staticmethod
@@ -724,36 +496,16 @@ class HeapsOperations:
             Returns:
                 None, prints to console
 
-
             Q) What do the levels represent?
-                a) Level 0 is root, level 1 has 2 nodes, level 2 has 4 nodes, etc...
+                a)
 
             Example Output) heap = [1, 3, 2, 7, 4, 5, 6]
                 - Level 0: 1
                 - Level 1: [3, 2]
                 - Level 2: [7,4, 5,6]
         '''
-        if not heap:
-            print('Empty heap')
-            return
-
-        print(f"\n{heap_type.upper()} HEAP STRUCTURE:")
-        print("=" * 30)
-
-        level = 0
-        start = 0
-
-        while start < len(heap):
-            level_size = 2 ** level
-            end = min(start + level_size, len(heap))
-            level_elements = heap[start:end]
-
-            print(f"Level {level}: {level_elements}")
-
-            start = end
-            level += 1
-
-
+        # Implement print_heap_structure here
+        pass
 
 
 class MedianFinder:
@@ -785,21 +537,27 @@ class MedianFinder:
             medianFinder.addNum(3);    // arr[1, 2, 3]
             medianFinder.findMedian(); // return 2.0
 
-            Time: O(log n) for add_num, O(1) for find_median
-            Space: O(n)
+
+        Q) What is the time and space complexity?
+            a)
+            a)
+        Q) Why use two heaps?
+            a)
+        Q) How do we maintain balance?
+            a)
+
     '''
+
     def __init__(self):
-        self.small = []  # the smaller half of the list, max heap (invert min-heap)
-        self.large = []  # the larger half of the list, min heap
+        # Initialize data structures here
+        pass
 
     def add_num(self, num):
-        if len(self.small) == len(self.large):
-            heapq.heappush(self.large, -heapq.heappushpop(self.small, -num))
-        else:
-            heapq.heappush(self.small, -heapq.heappushpop(self.large, num))
+        ''' Add number to data structure'''
+        # Implement add_num here
+        pass
 
     def find_median(self):
-        if len(self.small) == len(self.large):
-            return float(self.large[0] - self.small[0]) / 2.0
-        else:
-            return float(self.large[0])
+        ''' find median of all numbers added so far'''
+        # Implement find_median here
+        pass
