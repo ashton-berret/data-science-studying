@@ -373,5 +373,164 @@
         "method": "partition_list"
       }
     ]
+  },
+  "binary_trees": {
+    "description": "Binary tree operations and traversals",
+    "problems": [
+      {
+        "name": "Inorder Traversal",
+        "difficulty": "Easy",
+        "description": "Traverse tree in inorder (Left, Root, Right) - both recursive and iterative",
+        "file": "binary_trees_operations.py",
+        "method": "inorder_traversal_recursive"
+      },
+      {
+        "name": "Preorder Traversal",
+        "difficulty": "Easy",
+        "description": "Traverse tree in preorder (Root, Left, Right) - both recursive and iterative",
+        "file": "binary_trees_operations.py",
+        "method": "preorder_traversal_recursive"
+      },
+      {
+        "name": "Postorder Traversal",
+        "difficulty": "Easy",
+        "description": "Traverse tree in postorder (Left, Right, Root) - both recursive and iterative",
+        "file": "binary_trees_operations.py",
+        "method": "postorder_traversal_recursive"
+      },
+      {
+        "name": "Level Order Traversal",
+        "difficulty": "Medium",
+        "description": "Traverse tree level by level using BFS",
+        "file": "binary_trees_operations.py",
+        "method": "level_order_traversal"
+      },
+      {
+        "name": "Maximum Depth",
+        "difficulty": "Easy",
+        "description": "Find the maximum depth/height of a binary tree",
+        "file": "binary_trees_operations.py",
+        "method": "max_depth"
+      },
+      {
+        "name": "Minimum Depth",
+        "difficulty": "Easy",
+        "description": "Find the minimum depth to any leaf node",
+        "file": "binary_trees_operations.py",
+        "method": "min_depth"
+      },
+      {
+        "name": "Balanced Binary Tree",
+        "difficulty": "Easy",
+        "description": "Check if a binary tree is height-balanced",
+        "file": "binary_trees_operations.py",
+        "method": "is_balanced"
+      },
+      {
+        "name": "Invert Binary Tree",
+        "difficulty": "Easy",
+        "description": "Invert/flip a binary tree (swap all left and right children)",
+        "file": "binary_trees_operations.py",
+        "method": "invert_binary_tree"
+      },
+      {
+        "name": "Lowest Common Ancestor",
+        "difficulty": "Medium",
+        "description": "Find the lowest common ancestor of two nodes in a binary tree",
+        "file": "binary_trees_operations.py",
+        "method": "lowest_common_ancestor"
+      },
+      {
+        "name": "Path Sum",
+        "difficulty": "Easy",
+        "description": "Check if tree has a root-to-leaf path with given sum",
+        "file": "binary_trees_operations.py",
+        "method": "has_path_sum"
+      },
+      {
+        "name": "Path Sum II",
+        "difficulty": "Medium",
+        "description": "Find all root-to-leaf paths with given sum",
+        "file": "binary_trees_operations.py",
+        "method": "path_sum_all_paths"
+      },
+      {
+        "name": "Construct Tree from Preorder and Inorder",
+        "difficulty": "Medium",
+        "description": "Build binary tree from preorder and inorder traversal arrays",
+        "file": "binary_trees_operations.py",
+        "method": "build_tree_from_preorder_inorder"
+      },
+      {
+        "name": "Serialize and Deserialize Binary Tree",
+        "difficulty": "Hard",
+        "description": "Convert binary tree to string and back",
+        "file": "binary_trees_operations.py",
+        "method": "serialize_tree"
+      },
+      {
+        "name": "Validate Binary Search Tree",
+        "difficulty": "Medium",
+        "description": "Check if a binary tree is a valid binary search tree",
+        "file": "binary_trees_operations.py",
+        "method": "is_valid_bst"
+      },
+      {
+        "name": "Insert into BST",
+        "difficulty": "Medium",
+        "description": "Insert a value into a binary search tree",
+        "file": "binary_trees_operations.py",
+        "method": "bst_insert"
+      },
+      {
+        "name": "Search in BST",
+        "difficulty": "Easy",
+        "description": "Search for a value in a binary search tree",
+        "file": "binary_trees_operations.py",
+        "method": "bst_search"
+      },
+      {
+        "name": "Delete Node in BST",
+        "difficulty": "Medium",
+        "description": "Delete a node from a binary search tree",
+        "file": "binary_trees_operations.py",
+        "method": "bst_delete"
+      },
+      {
+        "name": "Binary Tree Paths",
+        "difficulty": "Easy",
+        "description": "Find all root-to-leaf paths in a binary tree",
+        "file": "binary_trees_operations.py",
+        "method": "binary_tree_paths"
+      },
+      {
+        "name": "Diameter of Binary Tree",
+        "difficulty": "Easy",
+        "description": "Find the diameter (longest path between any two nodes)",
+        "file": "binary_trees_operations.py",
+        "method": "diameter_of_binary_tree"
+      },
+      {
+        "name": "Count Complete Tree Nodes",
+        "difficulty": "Medium",
+        "description": "Count the total number of nodes in a binary tree",
+        "file": "binary_trees_operations.py",
+        "method": "count_nodes"
+      },
+      {
+        "name": "Symmetric Tree",
+        "difficulty": "Easy",
+        "description": "Check if a binary tree is symmetric (mirror of itself)",
+        "file": "binary_trees_operations.py",
+        "method": "is_symmetric"
+      },
+      {
+        "name": "Construct Tree from Array",
+        "difficulty": "Medium",
+        "description": "Build binary tree from level-order array representation",
+        "file": "binary_trees_operations.py",
+        "method": "build_tree_from_array"
+      }
+    ]
   }
 }
