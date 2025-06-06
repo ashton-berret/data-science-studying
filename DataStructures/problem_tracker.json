@@ -532,5 +532,115 @@
         "method": "build_tree_from_array"
       }
     ]
+  },
+  "backtracking": {
+    "description": "Backtracking algorithms for constraint satisfaction and exhaustive search",
+    "problems": [
+      {
+        "name": "Generate Permutations",
+        "difficulty": "Medium",
+        "description": "Generate all permutations of given numbers",
+        "file": "backtracking_operations.py",
+        "method": "generate_permutations"
+      },
+      {
+        "name": "Generate Combinations",
+        "difficulty": "Medium",
+        "description": "Generate all combinations of k numbers from 1 to n",
+        "file": "backtracking_operations.py",
+        "method": "generate_combinations"
+      },
+      {
+        "name": "Generate Subsets",
+        "difficulty": "Medium",
+        "description": "Generate all possible subsets (power set)",
+        "file": "backtracking_operations.py",
+        "method": "generate_subsets"
+      },
+      {
+        "name": "N-Queens Problem",
+        "difficulty": "Hard",
+        "description": "Place N queens on NxN board without attacks",
+        "file": "backtracking_operations.py",
+        "method": "solve_n_queens"
+      },
+      {
+        "name": "Sudoku Solver",
+        "difficulty": "Hard",
+        "description": "Solve 9x9 Sudoku puzzle using backtracking",
+        "file": "backtracking_operations.py",
+        "method": "solve_sudoku"
+      },
+      {
+        "name": "Generate Parentheses",
+        "difficulty": "Medium",
+        "description": "Generate all valid combinations of n pairs of parentheses",
+        "file": "backtracking_operations.py",
+        "method": "generate_parentheses"
+      },
+      {
+        "name": "Letter Combinations of Phone Number",
+        "difficulty": "Medium",
+        "description": "Generate all letter combinations for phone digits",
+        "file": "backtracking_operations.py",
+        "method": "letter_combinations"
+      },
+      {
+        "name": "Word Search",
+        "difficulty": "Medium",
+        "description": "Find if word exists in 2D grid using DFS",
+        "file": "backtracking_operations.py",
+        "method": "word_search"
+      },
+      {
+        "name": "Palindrome Partitioning",
+        "difficulty": "Medium",
+        "description": "Partition string into palindrome substrings",
+        "file": "backtracking_operations.py",
+        "method": "palindrome_partitioning"
+      },
+      {
+        "name": "Combination Sum",
+        "difficulty": "Medium",
+        "description": "Find combinations that sum to target (reuse allowed)",
+        "file": "backtracking_operations.py",
+        "method": "combination_sum"
+      },
+      {
+        "name": "Subset Sum",
+        "difficulty": "Medium",
+        "description": "Check if any subset sums to target value",
+        "file": "backtracking_operations.py",
+        "method": "subset_sum_exists"
+      },
+      {
+        "name": "Restore IP Addresses",
+        "difficulty": "Medium",
+        "description": "Restore all valid IP addresses from digit string",
+        "file": "backtracking_operations.py",
+        "method": "restore_ip_addresses"
+      },
+      {
+        "name": "Find All Paths in Maze",
+        "difficulty": "Medium",
+        "description": "Find all paths from start to end in maze",
+        "file": "backtracking_operations.py",
+        "method": "find_all_paths"
+      },
+      {
+        "name": "Partition Equal Subset Sum",
+        "difficulty": "Medium",
+        "description": "Check if array can be partitioned into two equal subsets",
+        "file": "backtracking_operations.py",
+        "method": "partition_equal_subset_sum"
+      },
+      {
+        "name": "Generate Unique Permutations",
+        "difficulty": "Medium",
+        "description": "Generate unique permutations with duplicate elements",
+        "file": "backtracking_operations.py",
+        "method": "generate_unique_permutations"
+      }
+    ]
   }
 }
