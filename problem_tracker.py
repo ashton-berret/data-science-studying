@@ -687,7 +687,75 @@ class ProblemTracker:
                         "method": "generate_unique_permutations"
                     }
                 ]
-              }
+            },
+            "dynamic_programming": {
+                "description": "Dynamic Programming algorithms for optimization and counting problems",
+                "problems": [
+                    {
+                        "name": "Fibonacci",
+                        "difficulty": "Easy",
+                        "description": "Calculate the nth fibonacci number using dynamic programming",
+                        "file": "dp1_operations.py",
+                        "method": "fibonacci"
+                    },
+                    {
+                        "name": "Climbing Stairs",
+                        "difficulty": "Easy",
+                        "description": "Calculate the number of distinct ways to climb n stairs (can step 1 or 2 steps at a time)",
+                        "file": "dp1_operations.py",
+                        "method": "climbing_stairs"
+                    },
+                    {
+                        "name": "House Robber",
+                        "difficulty": "Medium",
+                        "description": "Find the maximum money that can be robbed without robbing adjacent houses",
+                        "file": "dp1_operations.py",
+                        "method": "house_robber"
+                    },
+                    {
+                        "name": "Coin Change",
+                        "difficulty": "Medium",
+                        "description": "Find the minimum number of coins needed to make the given amount",
+                        "file": "dp1_operations.py",
+                        "method": "coin_change"
+                    },
+                    {
+                        "name": "Longest Increasing Subsequence",
+                        "difficulty": "Medium",
+                        "description": "Find the length of the longest strictly increasing subsequence",
+                        "file": "dp1_operations.py",
+                        "method": "longest_increasing_subsequence"
+                    },
+                    {
+                        "name": "Word Break",
+                        "difficulty": "Medium",
+                        "description": "Check if string can be segmented into dictionary words",
+                        "file": "dp1_operations.py",
+                        "method": "word_break"
+                    },
+                    {
+                        "name": "Best Time to Buy and Sell Stock",
+                        "difficulty": "Easy",
+                        "description": "Find maximum profit from a single buy/sell transaction",
+                        "file": "dp1_operations.py",
+                        "method": "buy_sell_stock1"
+                    },
+                    {
+                        "name": "Best Time to Buy and Sell Stock II",
+                        "difficulty": "Medium",
+                        "description": "Find maximum profit from multiple buy/sell transactions",
+                        "file": "dp1_operations.py",
+                        "method": "buy_sell_stock2"
+                    },
+                    {
+                        "name": "Longest Palindromic Substring",
+                        "difficulty": "Medium",
+                        "description": "Find the longest palindromic substring in a string",
+                        "file": "dp1_operations.py",
+                        "method": "longest_palindromic_substring"
+                    }
+                ]
+            }
         }
 
     def _load_problems(self):
@@ -844,7 +912,9 @@ class ProblemTracker:
             'hashmaps': 'Hashmap+Sets',
             'sliding_window': 'SlidingWindow+TwoPointer',
             'linked_lists': 'Linked Lists',
-            'arrays': 'Arrays'
+            'arrays': 'Arrays',
+            'backtracking': 'Backtracking',
+            'dynamic_programming': 'Dynamic Programming'
         }
 
         # Get directory name, with fallback
@@ -960,6 +1030,7 @@ Examples:
   python problem_tracker.py random                  # Random problem from any category
   python problem_tracker.py random arrays           # Random array problem
   python problem_tracker.py random arrays easy      # Random easy array problem
+  python problem_tracker.py random dynamic_programming  # Random DP problem
   python problem_tracker.py stats                   # Show statistics
   python problem_tracker.py complete arrays "Two Sum"  # Mark problem as completed
   python problem_tracker.py update                  # Update database with latest problems

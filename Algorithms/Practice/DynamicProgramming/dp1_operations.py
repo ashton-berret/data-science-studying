@@ -216,24 +216,8 @@ class DP1Operations:
 
         '''
 
-        # handle base cases directly
-        if n <= 1:
-            return n
-
-        # create DP table to store fib numbers
-        dp = [0] * (n + 1)
-
-        # enter first two values manually
-        dp[0] = 0
-        dp[1] = 1
-
-        # fill the table using transition relation: f(n) = f(n-1) + f(n-2)
-        for i in range(2, n + 1):
-            dp[i] = dp[i-1] + dp[i-2]
-
-        return dp[n]
-
-
+        # TODO: Implement fibonacci solution
+        pass
 
 
     @staticmethod
@@ -304,24 +288,8 @@ class DP1Operations:
 
         '''
 
-        # base case
-        if n <= 1:
-            return 1
-
-        # create the dp table
-        dp = [0] * (n+1)
-
-        # handle first two entries
-        dp[0] = 1 # one way to stay at ground --> do nothing
-        dp[1] = 1 # one way to get to first step
-
-
-        for i in range(2, n+1):
-            dp[i] = dp[i-1] + dp[i-2] # arrive from one step back or two steps back
-
-        return dp[n]
-
-
+        # TODO: Implement climbing stairs solution
+        pass
 
 
     @staticmethod
@@ -411,33 +379,8 @@ class DP1Operations:
 
         '''
 
-        if not nums:
-            return 0
-        if len(nums) == 1:
-            return nums[0]
-
-        # table to store amount of money robbed up to each house
-        n = len(nums)
-        dp =  [0] * n
-
-        # handle first two base cases
-        dp[0] = nums[0]
-        dp[1] = max(nums[0], nums[1])
-
-        # fill the table, for each house decide whether to rob it or not
-        for i in range(2, n):
-
-            # option 1 is skip current house, keep the previous max
-            skip_current = dp[i-1]
-
-            # option 2 is rob current, add the max from 2 houses ago
-            rob_current = dp[i-2] + nums[i]
-
-            dp[i] = max(skip_current, rob_current)
-
-        return dp[n-1]
-
-
+        # TODO: Implement house robber solution
+        pass
 
 
     @staticmethod
@@ -540,28 +483,8 @@ class DP1Operations:
             ✓ Minimum is indeed 2 coins!
         '''
 
-
-        if amount == 0:
-            return 0
-        if amount < 0 or not coins:
-            return -1
-
-        # create the dp table with pos inf values since we are finding minimums. has to be amount + 1 length long since must store the amount (and table is 0 indexed)
-        dp = [float('inf')] * (amount + 1)
-
-        # base case --> no coins needed to make 0
-        dp[0] = 0
-
-        # fill the table. for each amount, try every coin in coins
-        for i in range(1, amount + 1):
-            for coin in coins:
-                if coin <= i: # can only use the coin if it doesn't exceed the current amount we are trying to fill
-                    # option -> use this coin + the optimal solution for the complement coin value
-                    dp[i] = min(dp[i], dp[i-coin] + 1)
-
-        # return result, -1 if impossible, dp[amount] otherwise
-        return dp[amount] if dp[amount] and dp[amount] != float('inf') else -1 # have to put != inf since inf returns true in python (i.e., inf exists as val)
-
+        # TODO: Implement coin change solution
+        pass
 
 
     @staticmethod
@@ -670,23 +593,8 @@ class DP1Operations:
             ✓ Maximum length is indeed 4!
         '''
 
-        if not nums:
-            return 0
-
-        n = len(nums)
-        # initialize table where each value in dp automatically has a LIS of 1 (that value is a subsequence)
-        dp = [1] * n
-
-        # for each position, check all previous positions
-        for i in range(1,n):
-            for j in range(i):
-                # if we can extend the LIS ending at j to include nums[i]
-                if nums[j] < nums[i]: # so if the previous number is less than the current number
-                    dp[i] = max(dp[i], dp[j] + 1)
-                # else we can't add
-
-        return max(dp)
-
+        # TODO: Implement longest increasing subsequence solution
+        pass
 
 
     @staticmethod
@@ -804,28 +712,8 @@ class DP1Operations:
             ✓ "leetcode" = "leet" + "code", both in dictionary!
         '''
 
-        if not s:
-            return True
-
-        # convert the word dict to a set for O(1) lookup
-        word_set = set(word_dict)
-        n = len(s)
-
-        # dp[i] represents wheter s[0:i] can be segmented
-        dp = [False] * (n + 1) # have to store char at end of n
-        dp[0] = True # empty string can always be segmented
-
-        # for each position i, try all possible splits
-        for i in range(1, n+1):
-            for j in range(i):
-                # if s[0:j] can be segmeneted AND s[j:i] is a valid word (example where i is 6 and j is 4 -> check if dp[4] is valid AND if 4:6 is valid)
-                if dp[j] and s[j:i] in word_set:
-                    dp[i] = True
-                    break # found a valid segment, no need to keep checking
-
-        return dp[n] # returning the last to ensure the last character is part of the word (i.e., can't have dog but not dogs)
-
-
+        # TODO: Implement word break solution
+        pass
 
 
     @staticmethod
@@ -924,25 +812,8 @@ class DP1Operations:
             ✓ This matches our result!
         '''
 
-        if not prices or len(prices) < 2:
-            return 0
-
-        # best day to buy
-        min_price = prices[0]
-        max_profit = 0
-        n = len(prices)
-        # process each day, updating best buy price and profit if sold that day
-        for i in range(1, n):
-            # update min price if we found a better buy day
-            min_price = min(min_price, prices[i])
-
-            # calculate current profit if we sold today
-            current_profit = prices[i] - min_price
-            max_profit = max(max_profit, current_profit)
-
-        return max_profit
-
-
+        # TODO: Implement buy sell stock 1 solution
+        pass
 
 
     @staticmethod
@@ -1049,32 +920,8 @@ class DP1Operations:
 
         '''
 
-        if not prices or len(prices) < 2:
-            return 0
-
-        # hold_profit -> max profit when holding stock
-        hold_profit = -prices[0] # buy on day 0
-
-        # sold_profit -> max profit when not holding stock
-        sold_profit = 0 # no transactions on day 0
-
-        # process each day, updating both states
-        for i in range(1, len(prices)):
-            # update the hold_profit state... keep holding or buy today (i.e., if hold_profit is -2 (bought at $2), but price today is 1, we get max (-2, (0 - 1)) = max(-2, -1), then better to buy today than to keep hold position)
-            # either
-            # |> i was already holding stock yesterday, so i don't sell today
-            # |> i sold yesterday, so i buy today (profit right after i sold the last stock i owned - what it would cost to buy the new stock)
-            new_hold_profit = max(hold_profit, sold_profit - prices[i])
-
-            # update the sold profit state: keep not holding or sell today
-            # either
-            # |> i was not holding profit yesterday
-            # |> i was holding stock yesterday + im going to sell today (profit from right after the time of last purchase + would i would make today)
-            new_sold_profit = max(sold_profit, hold_profit + prices[i])
-
-            hold_profit, sold_profit = new_hold_profit, new_sold_profit
-
-        return sold_profit # all transactions completed
+        # TODO: Implement buy sell stock 2 solution
+        pass
 
 
     @staticmethod
@@ -1241,41 +1088,8 @@ class DP1Operations:
             - Longest: "bab" with length 3 ✓
         '''
 
-        if not s:
-            return ""
-
-        n = len(s)
-        # dp[i][j] = True if substring s[i:j+1] is a palindrome
-
-        dp = [[False] * n for _ in range(n)]
-
-        # track the longest palindrome found
-        start = 0 # starting index of the longest palindrome
-        max_len = 1
-
-        # Phase 1: all single characters are palindromes
-        for i in range(n):
-            dp[i][i] = True
-
-        # Phase 2: check for palindromes of length 2
-        for i in range(n-1):
-            if s[i] == s[i+1]:
-                dp[i][i+1] = True
-                start = i
-                max_len = 2
-
-        # phase 3: check for palindromes of length 3 or more
-        for length in range(3, n+1):
-            for i in range(n - length + 1): # starting position
-                j = i + length - 1 # ending position
-
-                # s[i:j+1] is palindrome if s[i] == s[j] and s[i+1:j] is palindrome
-                if s[i] == s[j] and dp[i+1][j-1]:
-                    dp[i][j] = True
-                    start = i
-                    max_len = length
-
-        return s[start:start + max_len]
+        # TODO: Implement longest palindromic substring solution
+        pass
 
 
     @staticmethod
@@ -1322,7 +1136,3 @@ class DP1Operations:
 if __name__ == "__main__":
     # Print concepts for learning
     DP1Operations.print_dp_concepts()
-
-
-
-
