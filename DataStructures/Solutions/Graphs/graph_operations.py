@@ -525,4 +525,165 @@ class GraphOperations:
 
 
 
+    @staticmethod
+    def clone_graph(node):
+        '''
+        Clone/deep copy a graph given a reference to one of its nodes
 
+        Args:
+            node: a node object with val and neighbors list
+
+        Returns:
+            Node: cloned version of the input node's connected component
+
+        Q) Why can't we just copy references?
+            a) We need a completely separate graph structure
+        Q) How do we handle cycles in a graph?
+            a) Use the visited map to avoid infinite loops
+        Q) What is the key insight?
+            a) Map each original node to its clone to maintain relationships
+        Q) What is the time and space complexity?
+            a) Time complexity is O(V + E)
+            a) Space complexity is O(V)
+        '''
+
+        if not node:
+            return None
+
+        visited = {}
+
+        def dfs_clone(original):
+            # if already cloned, return the clone
+            clone = Node(original.val)
+            visited[original] = clone # mark as visited before recursing
+
+            for neighbor in original.neighbors:
+                clone.neighbors.append(dfs_clone(neighbor))
+
+            return clone
+
+        return dfs_clone(node)
+
+
+
+    @staticmethod
+    def course_schedule(num_courses, prerequisites):
+        '''
+        Determine if you can finish all courses given prerequisites
+
+        Args:
+            num_courses: int number of courses (0 to numCourses - 1)
+            prerequisites: list of [course, prerequisite] pairs
+
+        Returns:
+            boolean: true if can complete all, false otherwise
+
+        Q) When is it impossible to complete a course?
+            a) When there is a cycle in the prerequisite dependencies
+        Q) How do we detect cycles in directed graphs?
+            a) Use DFS with 3 colors: white, grey, black
+        Q) What do the colors represent?
+            a) unprocessed, in current path, processed
+        Q) What is the time and space complexity?
+            a) Time complexity is O(V + E)
+            a) Space complexity is O(V)
+
+        Example Walkthrough) num_courses = 4, prereqs = [[1,0], [2, 0], [3,1], [3,2]]
+            course_dependencies = 0 -> 1 -> 3, 0->2->3
+            result = True (can take in order: 0,1,2,3)
+        '''
+
+        # build adjacency list from prerequisites
+        graph = defaultdict(list)
+        for course, prereq in prerequisites:
+            graph[prereq].append(course) # prereq -> course
+
+        WHITE, GRAY, BLACK = 0, 1, 2
+        color = [WHITE] * num_courses
+
+        def has_cycle(course):
+            # gray node found, back edge indicates cycle
+            if color[course] == GRAY:
+                return True
+            if color[course] == BLACK:
+                return False
+
+            color[course] = GRAY
+
+            # check all dependent courses
+            for dependent in graph[course]:
+                if has_cycle(dependent):
+                    return True
+
+            color[course] = BLACK
+            return False
+
+        # check for cycles starting from any unvisited course
+        for course in range(num_courses):
+            if color[course] == WHITE:
+                if has_cycle(course):
+                    return False # cycle found, impossible
+
+        return True
+
+
+
+    @staticmethod
+    def number_of_islands(grid):
+        '''
+        Count number of islands in a 2D binary grid
+
+        Args:
+            grid: 2D list where '1' represents land and '0' represents water
+
+        Returns:
+            int: number of islands
+
+
+        Q) What represents an island?
+            a) Connected group of '1's
+        Q) What does connected mean?
+            a) Adjacently horizontally or vertically
+        Q) How do we avoid counting the same island multiple times?
+            a) Mark visited cells by changing '1' to '0' or using visited set
+        Q) What is the time and space complexity?
+            a) Time complexity is O(rows * cols)
+            a) SPace complexity is O(rows * cols)
+
+        Example)  grid = [
+                ["1","1","0","0","0"],
+                ["1","1","0","0","0"],
+                ["0","0","1","0","0"],
+                ["0","0","0","1","1"]
+            ]
+            Result: 3 islands
+        '''
+
+        if not grid or not grid[0]:
+            return 0
+
+        rows, cols = len(grid), len(grid[0])
+        island_count = 0
+
+        def dfs_sink_island(row, col):
+            # boundary check and water check
+            if (row < 0 or row >= rows or col < 0 or col >= cols or grid[row][col] == '0'):
+                return
+
+            # mark current land cell as visited by sinking it (turning it into water value)
+            grid[row][col] = '0'
+
+            # explore all 4 directions
+            directions = [(0,1), (0,-1), (1,0), (-1,0)]
+            for dr, dc in directions:
+                dfs_sink_island(row + dr, col + dc)
+
+
+        # scan entire grid for land cells
+        for row in range(rows):
+            for col in range(cols):
+                if grid[row][col] == '1':
+                    island_count += 1
+                    dfs_sink_island(row, col)
+
+        return island_count
