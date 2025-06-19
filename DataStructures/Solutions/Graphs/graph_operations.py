@@ -554,6 +554,10 @@ class GraphOperations:
 
         def dfs_clone(original):
             # if already cloned, return the clone
+            if original in visited:
+                return visited[original]
+
+            # create clone of current node
             clone = Node(original.val)
             visited[original] = clone # mark as visited before recursing
 
