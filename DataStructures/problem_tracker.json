@@ -710,5 +710,143 @@
         "method": "longest_palindromic_substring"
       }
     ]
+  },
+  "graphs": {
+    "description": "Graph algorithms, traversals, and pathfinding problems",
+    "problems": [
+      {
+        "name": "Create Adjacency List",
+        "difficulty": "Easy",
+        "description": "Create adjacency list representation from edge list, handling weighted/unweighted and directed/undirected graphs",
+        "file": "graph_operations.py",
+        "method": "create_adjacency_list"
+      },
+      {
+        "name": "Add Vertex",
+        "difficulty": "Easy",
+        "description": "Add a vertex to the graph adjacency list",
+        "file": "graph_operations.py",
+        "method": "add_vertex"
+      },
+      {
+        "name": "Add Edge",
+        "difficulty": "Easy",
+        "description": "Add an edge to the graph with specified weight and direction",
+        "file": "graph_operations.py",
+        "method": "add_edge"
+      },
+      {
+        "name": "Remove Vertex",
+        "difficulty": "Easy",
+        "description": "Remove a vertex and all its edges from the graph",
+        "file": "graph_operations.py",
+        "method": "remove_vertex"
+      },
+      {
+        "name": "Remove Edge",
+        "difficulty": "Easy",
+        "description": "Remove an edge between two vertices",
+        "file": "graph_operations.py",
+        "method": "remove_edge"
+      },
+      {
+        "name": "DFS Recursive",
+        "difficulty": "Medium",
+        "description": "Perform depth-first search recursively starting from given vertex",
+        "file": "graph_operations.py",
+        "method": "dfs_recursive"
+      },
+      {
+        "name": "DFS Iterative",
+        "difficulty": "Medium",
+        "description": "Perform depth-first search iteratively using a stack",
+        "file": "graph_operations.py",
+        "method": "dfs_iterative"
+      },
+      {
+        "name": "BFS",
+        "difficulty": "Medium",
+        "description": "Perform breadth-first search using queue for level-order traversal",
+        "file": "graph_operations.py",
+        "method": "bfs"
+      },
+      {
+        "name": "Has Path",
+        "difficulty": "Easy",
+        "description": "Check if there is a path between two vertices using graph traversal",
+        "file": "graph_operations.py",
+        "method": "has_path"
+      },
+      {
+        "name": "Find Connected Components",
+        "difficulty": "Medium",
+        "description": "Find all connected components in an undirected graph",
+        "file": "graph_operations.py",
+        "method": "find_connected_components"
+      },
+      {
+        "name": "Shortest Path Unweighted",
+        "difficulty": "Medium",
+        "description": "Find shortest path in unweighted graph using BFS with path reconstruction",
+        "file": "graph_operations.py",
+        "method": "shortest_path_unweighted"
+      },
+      {
+        "name": "Clone Graph",
+        "difficulty": "Medium",
+        "description": "Deep copy a graph given a reference to one of its nodes, handling cycles",
+        "file": "graph_operations.py",
+        "method": "clone_graph"
+      },
+      {
+        "name": "Course Schedule",
+        "difficulty": "Medium",
+        "description": "Determine if courses can be completed given prerequisites (cycle detection in directed graph)",
+        "file": "graph_operations.py",
+        "method": "course_schedule"
+      },
+      {
+        "name": "Number of Islands",
+        "difficulty": "Medium",
+        "description": "Count connected components of land cells in 2D binary grid using DFS/BFS",
+        "file": "graph_operations.py",
+        "method": "number_of_islands"
+      },
+      {
+        "name": "Word Ladder",
+        "difficulty": "Hard",
+        "description": "Find shortest transformation sequence between two words, changing one letter at a time",
+        "file": "graph_operations.py",
+        "method": "word_ladder"
+      },
+      {
+        "name": "Dijkstra's Shortest Path",
+        "difficulty": "Hard",
+        "description": "Find shortest path from start vertex to all other vertices in weighted graph",
+        "file": "graph_operations.py",
+        "method": "dijkstra_shortest_path"
+      },
+      {
+        "name": "Friend Circles",
+        "difficulty": "Medium",
+        "description": "Find number of friend circles in social network using adjacency matrix",
+        "file": "graph_operations.py",
+        "method": "friend_circles"
+      },
+      {
+        "name": "Valid Tree",
+        "difficulty": "Medium",
+        "description": "Check if given edges form a valid tree (connected, n-1 edges, no cycles)",
+        "file": "graph_operations.py",
+        "method": "valid_tree"
+      },
+      {
+        "name": "Find Path with Obstacles",
+        "difficulty": "Medium",
+        "description": "Find path in 2D grid with obstacles using BFS with path reconstruction",
+        "file": "graph_operations.py",
+        "method": "find_path_with_obstacles"
+      }
+    ]
   }
 }
