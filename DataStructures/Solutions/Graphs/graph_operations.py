@@ -2,6 +2,13 @@ from collections import defaultdict, deque
 import heapq
 from types import GeneratorType
 
+class Node:
+    def __init__(self, val=0, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors if neighbors is not None else []
+
+    def __repr__(self):
+        return f'Node({self.val})'
 
 class GraphOperations:
 
@@ -351,260 +358,63 @@ class GraphOperations:
 
 
     @staticmethod
-    def has_cycle_directed(graph):
+    def has_path(graph, start, end):
         '''
-        Detect a cycle in a directed graph using DFS and recursion stack
+        Check if there is a path between two vertices
 
         Args:
             graph: dict representing adjacency list
+            start: starting vertex
+            end: target vertex
 
         Returns:
-            bool: True if cycle exists, False otherwise
+            boolean: True if path exists, false otherwise
 
-
-        Q) How do we detect cycles in directed graphs?
-            a) Track nodes in current recursion path - back edge indicates cycle
-        Q) What are the three states of a vertex?
-            a) White (unvisited), grey (in current path), black (processed)
-        Q) When do we detect a cycle?
-            a) When we encounter a grey vertex
+        Q) Which traversal algorithm should we use?
+            a) Either DFS or BFS works - we just need to check reachability
+        Q) Can we optimize the search?
+            a) Yes, just return early when target is found
+        Q) What if start equals end?
+            a) Return True (trivial path of length 0)
         Q) What is the time and space complexity?
             a) Time complexity is O(V + E)
             a) Space complexity is O(V)
 
-        Example Walkthrough) graph = {0: [1], 1:[2], 2:[0]}
-            1. start dfs from 0, mark as grey
-            2. visit 1, mark as grey
-            3. visit 2, mark as grey,
-            4. visit 0, already grey -> cycle detected
+        Example Walkthrough) graph = {"A": [("B", 1)], "B": [("C", 1)], "C": [], "D": []}
+            1. has_path(graph, 'A', 'C') -> True
+            2. has_path(graph, 'A', 'D') -> False
         '''
 
-        # create categorical tag
-        WHITE, GRAY, BLACK = 0, 1, 2
-        color = {vertex: WHITE for vertex in graph}
+        # trivial case where start and end are the same
+        if start == end:
+            return True
 
-        def dfs_visit(vertex):
-            # back edge detected, found vertex already in current recursion path
-            if color[vertex] == GRAY:
-                return True
-
-            # already fully processed this vertex and its subtree
-            if color[vertex] == BLACK:
-                return False
-
-            # mark vertex as being in current path
-            color[vertex] = GRAY
-
-            # recursively visit all neighbors
-            if vertex in graph:
-                for neighbor, _ in graph[vertex]:
-                    # ensure each neighbor has a color
-                    if neighbor not in color:
-                        color[neighbor] = WHITE
-                    if dfs_visit(neighbor):
-                        return True
-
-            color[vertex] = BLACK # mark as processed
+        if start not in graph:
             return False
 
-        # start DFS from every univisited vertex (handles disconnected components)
-        for vertex in graph:
-            if color[vertex] == WHITE:
-                if dfs_visit(vertex):
-                    return True
+        visited = set()
+        stack = [start] # use DFS with the stack
+
+        while stack:
+            vertex = stack.pop()
+
+            if vertex == end:
+                return True
+
+            if vertex not in visited:
+                visited.add(vertex)
+
+                if vertex in graph:
+                    for neighbor, _ in graph[vertex]:
+                        stack.append(neighbor)
 
         return False
-
-
-
-    @staticmethod
-    def dijkstra_shortest_path(graph, start):
-        '''
-        Find shortest paths from start vertex using djikstra's algorithm
-
-        Args:
-            graph: dict representing weighted adjacency lists
-            start: starting vertex
-
-        Returns:
-            dict: distances from start to all vertices
-
-        Q) How does Dijkstra's algorithm work?
-            a) Greedily select the nearest unvisited vertex and relax its edges
-        Q) What data structure is used?
-            a) Priority queue (min-heap) to efficiently get minimum distance vertex
-        Q) What is the limitation?
-            a) Doesn't work with negative edge weights
-        Q) What is the time and space complexity?
-            a) Time complexity is O((V + E) log V)
-            a) Space complexity is O(V)
-
-        Example Walkthrough) graph = {0: [(1, 4), (2, 1)], 1: [(3, 1)], 2: [(1, 2), (3, 5)], 3: []}
-            1. start = 0
-            2. initial distances: {0: 0, others = inf)
-            3. process 0: update dist[1] = 4, dist[2] = 1
-            4. process 2: update dist[1] = min(4, (dist[2] + 2) -> dist[1] = 3 (going from 0->2->1 vs just 0->1)
-            5. process 1: update dist[3] = dist[1] + 1 = 4
-            6. process 3: no updates
-        '''
-
-        # initialize distances
-        distances = {vertex: float('inf') for vertex in graph}
-        distances[start] = 0
-
-        # priority queue: (distance, vertex) tuples, min-heap by distance
-        pq = [(0, start)]
-        visited = set()
-
-        while pq:
-            # extract vertex with minimum distance
-            current_dist, current_vertex = heapq.heappop(pq)
-
-            # skip if already processed
-            if current_vertex in visited:
-                continue
-
-            visited.add(current_vertex)
-
-            # relax all outgoing edges from current vertex
-            if current_vertex in graph:
-                for neighbor, weight in graph[current_vertex]:
-                    # calculate new distance through current vertex
-                    new_dist = current_dist + weight
-
-                    # update distance if shorter than path found
-                    if new_dist < distances[neighbor]:
-                        distances[neighbor] = new_dist
-                        # add to pq for future processing
-                        heapq.heappush(pq, (new_dist, neighbor))
-
-        return distances
-
-
-    @staticmethod
-    def bellman_ford(graph, start):
-        '''
-        Find the shortest paths from start vertex using bellman ford algorithm
-
-        Args:
-            graph: dict representing weighted adjacency list
-            start: starting vertex
-
-        Returns:
-            tuple: (distances dict, boolean indicating if negative cycle exists)
-
-        Q) How does bellman-ford differ from djiskstra?
-            a) Bellman-Ford can handle negative weights and detect negative cycles
-        Q) How many iterations does it need?
-            a) V-1 iterations to find shortest paths, V to detect negative cycles
-        Q) What is edge relaxation?
-            a) Update distance if shorter path found: dist[v] = min(dist[v], dist[u] + weight(u,v))
-        Q) What is time and space complexity?
-            a) Time complexity is O(VE)
-            a) Space complexity is O(V)
-
-        Example Walkthrough) Graph with negative edge: {0: [(1, 1), (2, 4)], 1: [(2, -3), (3, 2)], 2: [(3, 3)], 3: []}
-            1. iteration 1: dist[1] = 1, dist[2] = 4
-            2. iteration 2: dist[2] = min(4, -2) = -2, dist[3] = dist[1] + 2 = 3
-            3. iteration 3. dist[3] = min(3, dist[2] + 3) = min(3, 1) = 1
-        '''
-
-        # collect all vertices (including those that only appear as destinations)
-        vertices = set(graph.keys())
-        for vertex in graph:
-            for neighbor, _ in graph[vertex]:
-                vertices.add(neighbor)
-
-        distances = {vertex: float('inf') for vertex in vertices}
-        distances[start] = 0
-
-        # relax all edges v-1 times to find shortest paths
-        for _ in range(len(vertices) - 1):
-            # check every edge in graph
-            for vertex in graph:
-                # only relax edges from reachable vertices
-                if distances[vertex] != float('inf'):
-                    for neighbor, weight in graph[vertex]:
-                        if distances[vertex] + weight < distances[neighbor]:
-                            distances[neighbor] = distances[vertex] + weight
-
-        # check for negative cycles
-        for vertex in graph:
-            if distances[vertex] != float('inf'):
-                for neighbor, weight in graph[vertex]:
-                    # if we can still relax an edge, negative cycle exists
-                    if distances[vertex] + weight < distances[neighbor]:
-                        return distances, True
-
-        return distances, False
-
-
-    @staticmethod
-    def floyd_warshall(graph):
-        '''
-        Find shortest paths between all pairs of vertices
-
-        Args:
-            graph: dict representing weighted adjacency list
-
-        Returns:
-            dict: distances between all pairs of vertices
-
-        Q) What is the Floyd-Warshall algo?
-            a) Dynamic programming approach for all-pairs shortest path
-        Q) What is the recurrence relation?
-            dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j]) for all k
-        Q) When to use Floyd-Warshall vs Dijkstra V number of times?
-            a) Floyd-Warshall for dense graphs, Dijkstra for sparse graphs
-        Q) What is the time and space complexity?
-            a) Time complexity is O(V^3)
-            a) Space Complexity is O(V^2)
-
-        Example Walkthrough) 3 vertices, k=1
-            dist[0][2] = min(dist[0,2], dist[0][1] + dist[1][2])
-            consider path 0->1->2 vs direct path 0->2
-        '''
-
-        # get all vertices
-        vertices = set(graph.keys())
-        for vertex in graph:
-            for neighbor, _ in graph[vertex]:
-                vertices.add(neighbor)
-
-        vertices = list(vertices)
-        n = len(vertices)
-
-        # init distance matrix
-        dist = {}
-        for i in vertices:
-            dist[i] = {}
-            for j in vertices:
-                if i == j:
-                    dist[i][j] = 0
-                else:
-                    dist[i][j] = float('inf')
-
-        # fill in direct edges
-        for vertex in graph:
-            for neighbor, weight in graph[vertex]:
-                dist[vertex][neighbor] = weight
-
-        # floyd warshall algorithm
-        for k in vertices:
-            for i in vertices:
-                for j in vertices:
-                    if dist[i][k]  + dist[k][j] < dist[i][j]:
-                        dist[i][j] = dist[i][k] + dist[j][k]
-
-
-        return dist
-
 
 
     @staticmethod
     def find_connected_components(graph):
         '''
-        Find all connected components in undirected graph
+        Find all connected components in an undirected graph
 
         Args:
             graph: dict representing adjacency list
@@ -616,19 +426,103 @@ class GraphOperations:
             a) Maximal set of vertices where there's a path between any two
         Q) How do we find all components?
             a) Run DFS from each unvisited vertex
-        Q) What's the difference from strongly connected components?
-            a) Connected components are for undirected graphs
+        Q) Why is this useful?
+            a) Network analysis, clustering, finding isolated groups
         Q) What is the time and space complexity?
             a) Time complexity is O(V + E)
             a) Space complexity is O(V)
 
-        Example Walkthrough) Graph: {0: [1], 1: [0], 2:[3], 3:[2], 4:[]}
-            1. DFS from 0: visits {0, 1} - component 1
-            2. DFS from 2: visits {2, 3} - component 2
-            3. DFS from 4: visits {4} - component 3
-            4. Result: [[0,1], [2,3], [4]]
+        Example Walkthrough) graph = {"A": [("B", 1)], "B": [("A", 1)], "C": [("D", 1)], "D": [("C", 1)], "E": []}
+            Result: [["A", "B"], ["C", "D"], ["E"]]
         '''
 
         visited = set()
+        components = []
+
+        def dfs_component(vertex, component):
+            visited.add(vertex)
+            component.append(vertex)
+
+            # recursively visit all unvisited neighbors
+            if vertex in graph:
+                for neighbor, _ in graph[vertex]:
+                    if neighbor not in visited:
+                        dfs_component(neighbor, component)
+
+        # start DFS from each unvisited vertex
+        for vertex in graph:
+            if vertex not in visited:
+                component = []
+                dfs_component(vertex, component)
+                components.append(component)
+
+        return components
+
+
+
+    @staticmethod
+    def shortest_path_unweighted(graph, start, end):
+        '''
+        Find shortest path in unweighted graph using BFS
+
+        Args:
+            graph: dict representing unweighted graph using BFS
+            start: starting vertex
+            end: target vertex
+
+        Returns:
+            list: path from start to end, empty if no path exists
+
+        Q) Why does BFS find shortest path?
+            a) BFS explores vertices level by level, guaranteeing shortest distance
+        Q) How do we reconstruct the path?
+            a) Track parent pointers during BFS, then backtrack from end to start
+        Q) What if multiple shortest paths exist?
+            a) Return the one found first by BFS
+        Q) What is the time and space complexity?
+            a) Time complexity is O(V + E)
+            a) Space complexity is O(V)
+
+        Example Walkthrough) graph = {"A": [("B", 1), ("C", 1)], "B": [("D", 1)], "C": [("D", 1)], "D": []}
+            1. shortest_path_unweighted(graph, 'A', 'D')
+            2. result = ['A', 'B', 'D'] or ['A', 'C', 'D']
+        '''
+
+        # handle edge cases
+        if start == end:
+            return [start]
+        if start not in graph:
+            return []
+
+        visited = set()
+        queue = deque([start])
+        parent = {start: None} # track parent pointers for path reconstruction
+
+        while queue:
+            vertex = queue.popleft()
+
+            if vertex not in visited:
+                visited.add(vertex)
+
+            # check if we reached the target
+            if vertex == end:
+                # reconstruct path by following parent pointers
+                path = []
+                current = end
+                while current is not None:
+                    path.append(current)
+                    current = parent[current]
+                return path[::-1]
+
+            if vertex in graph:
+                for neighbor, _ in graph[vertex]:
+                    if neighbor not in visited and neighbor not in parent:
+                        parent[neighbor] = vertex
+                        queue.append(neighbor)
+
+
+        return []
+
+
 
 
