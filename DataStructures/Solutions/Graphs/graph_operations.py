@@ -687,3 +687,310 @@ class GraphOperations:
                     dfs_sink_island(row, col)
 
         return island_count
+
+
+
+    @staticmethod
+    def word_ladder(begin_word, end_word, word_list):
+        '''
+        Find the length of the shortest transformation sequence from begin_word to end_word
+
+        Args:
+            begin_word: start word
+            end_word: target word
+            word_list: list of valid intermediate words
+
+        Returns:
+            int: length of shortest transformation sequence, 0 if possible
+
+        Q) What makes two words connected?
+            a) Different by exactly one letter
+        Q) Why use BFS instead of DFS?
+            a) BFS finds shortest transformation sequence
+        Q) How do we optimize neighbor finding?
+            a) For each position, try all 26 letters instead of checking all words
+        Q) What is the time and space complexity?
+            a) Time complexity is O(M^2 * N) where M = word length, N = word list size
+            a) Space complexity is O(M * N)
+
+        Example Walkthrough)
+            - begin_word = 'hit', end_word = 'cog'
+            - word_list = ['hot', 'dot', 'dog', 'lot', 'log', 'cog']
+            - result = 5 (hit -> hot -> dot -> dog -> cog)
+        '''
+
+        if end_word not in word_list:
+            return 0
+
+
+        # convert to set for O(1) lookup
+        word_set = set(word_list)
+        queue = deque([(begin_word, 1)]) # word, steps
+        visited = {begin_word}
+
+        while queue:
+            current_word, steps = queue.popleft()
+
+            if current_word == end_word:
+                return steps
+
+            # generate all possible one-letter transformations
+            for i in range(len(current_word)):
+                for c in 'abcdefghijklmnopqrstuvqxyz':
+                    if c == current_word[i]:
+                        continue
+
+                    # create new word by changing one letter
+                    new_word = current_word[:i] + c + current_word[i+1:]
+
+                    # check if valid transformation and not in visited
+                    if new_word in word_set and new_word not in visited:
+                        visited.add(new_word)
+                        queue.append((new_word, steps + 1))
+
+        return 0
+
+
+
+
+    @staticmethod
+    def dijkstra_shortest_path(graph, start):
+        '''
+        Find the shortetst path from start vertex using Dijkstra's algo
+
+        Args:
+            graph: dict representing weighted adjacency list
+            start: starting vertex
+
+        Return:
+            dict: distances from start to all vertices
+
+        Q) How does Dijkstra's algorithm work?
+            a) Greedily select nearerst unvisited vertex and relax its edges
+        Q) What data structure is used?
+            a) Priority queue (min-heap) to efficiently get minimum distance vertex
+        Q) What's the limitation of Dijkstra's algorithm?
+            a) Can't handle negative edge weights
+        Q) What is the time and space complexity?
+            a) Time complexity is O((V + E) log V)
+            a) Space complexity is O(V)
+
+        Example Walkthrough)
+            graph = {"A": [("B", 4), ("C", 2)], "B": [("D", 3)], "C": [("D", 1)], "D": []}
+            dijkstra_shortest_path(graph, "A")
+            Result: {"A": 0, "B": 4, "C": 2, "D": 3} (shortest distances)
+        '''
+
+        # initialize distances: start=0, all others = inf
+        distances = {vertex: float('inf') for vertex in graph}
+        distances[start] = 0
+
+        pq = [(0, start)] # distance, vertex
+        visited = set()
+
+        while pq:
+            current_dist, current_vertex = heapq.heappop(pq)
+
+            # skip if already processed bc of potential duplicate entries
+            if current_vertex in visited:
+                continue
+
+            visited.add(current_vertex)
+
+            # relax all outgoing edges from current vertex
+            if current_vertex in graph:
+                for neighbor, weight in graph[current_vertex]:
+                    new_dist = current_dist + weight
+
+                    if new_dist < distances[neighbor]:
+                        distances[neighbor] = new_dist
+                        # add to pq for future processing
+                        heapq.heappush(pq, (new_dist, neighbor))
+
+        return distances
+
+
+
+    @staticmethod
+    def friend_circles(is_connected):
+        '''
+        Find the number of circles in a social network
+
+        Args:
+            is_connected: 2D martix where is_connected[i][j] = 1 if two people are friends
+
+        Returns:
+            int: number of friend circles
+
+        Q) What is a friend circle?
+            a) A group where everyone is connected (directly or indirectly)
+        Q) How is this different from the adjacency list representation?
+            a) This uses adjacency matrix instead of list.
+        Q) What is the relationship to connected components?
+            a) Each friend circle is a connected component
+        Q) What is the time and space complexity?
+            a) Time complexity is O(N^2)
+            a) Space complexity is O(n)
+
+        Example)
+            is_connected=  [[1,1,0], [1,1,0], [0,0,1]]
+            result: 2 (circle 1: person 0 and person 1, circle 2 is person 2 alone)
+
+                    Person:         0  1  2
+
+                    Person 0:      [1, 1, 0]
+                    Person 1:      [1, 1, 0]
+                    Person 2:      [0, 0, 1]
+        '''
+
+        n = len(is_connected)
+        visited = set()
+        circles = 0
+
+        def dfs_friend_circle(person):
+            visited.add(person)
+
+            for friend in range(n):
+                # if they're friends and friend not in visited
+                if is_connected[person][friend] == 1 and friend not in visited:
+                    dfs_friend_circle(friend)
+
+        # start DFS from each unvisited person
+        for person in range(n):
+            if person not in visited:
+                circles += 1
+                dfs_friend_circle(person)
+
+        return circles
+
+
+
+
+    @staticmethod
+    def valid_tree(n, edges):
+        '''
+        Check if given edges will form a valid tree
+
+        Args:
+            n: number of nodes (labeled 0 to n-1)
+            edges: list of undirected edges
+
+        Returns:
+            boolean: True if edges form a valid tree
+
+        Q) What are the properties of a valid tree?
+            a) Connected, has exactly n-1 edges, and no cycles
+        Q) Can we check these properties efficiently?
+            a) Check edge count first, the connectivity via DFS/BFS
+        Q) Why exactly n-1 edges?
+            a) Tree with n nodes needs exactly n-1 edges to be connected without cycles
+        Q) What is the time and space complexity?
+            a) Time complexity is O(V + E)
+            a) Space complexity is O(V + E)
+        '''
+
+        if len(edges) != n - 1:
+            return False
+
+        # build adjacency list
+        graph = defaultdict(list)
+        for u, v in edges:
+            graph[u].append(v)
+            graph[v].append(u)
+
+        visited = set()
+        stack = [0]
+
+        while stack:
+            node = stack.pop()
+            if node not in visited:
+                visited.add(node)
+                for neighbor in graph[node]:
+                    if neighbor not in visited:
+                        stack.append(neighbor)
+
+
+        # tree is valid if all nodes are reachable
+        return len(visited) == n
+
+
+
+
+    @staticmethod
+    def find_path_with_obstacles(grid, start, end):
+        '''
+        Find path in grid with obstacles using BFS
+
+        Args:
+            grid: 2D matrix where 0 = empty, 1 = obstacle
+            start: tuple (row, col) of start position
+            end: tuple (row, col) of end position
+
+        Returns:
+            list: path as list of (row, col) tuples, empty if no path
+
+        Q) Why use BFS?
+            a) Guarantees shortest path in unweighted grids
+        Q) How do we handle obstacles?
+            a) Skip cells with value of 1 during exploration
+        Q) How do we reconstruct the path?
+            a) Track parent pointers using BFS then backtrack
+        Q) What is the time and space complexity?
+            a) Time complexity is O(rows * cols)
+            a) Space complexity is O(rows * cols)
+
+        Example)
+            Grid: [[0,0,1],
+                   [0,0,0],
+                   [1,0,0]]
+
+            Visual representation:
+            (0,0) → (0,1) | (0,2)
+              ↓       ↓   | WALL
+            (1,0) → (1,1) → (1,2)
+            WALL    ↓       ↓
+            (2,0) → (2,1) → (2,2)
+        '''
+
+        if not grid or not grid[0]:
+            return []
+
+        rows, cols = len(grid), len(grid[0])
+        start_row, start_col = start
+        end_row, end_col = end
+
+        # check if start or end positions are obstacles
+        if grid[start_row][start_col] == 1 or  grid[end_row][end_col] == 1:
+            return []
+
+        # bfs setup
+        queue = deque([start])
+        visited = {start}
+        parent = {}
+        parent[start] = None
+        directions = [(0, 1), (0, -1), (1, 0), (-1, 0)]
+
+        while queue:
+            current_row, current_col = queue.popleft()
+
+            if (current_row, current_col) == end:
+                path = []
+                current = end
+                while current is not None:
+                    path.append(current)
+                    current = parent[current]
+                return path[::-1] # reverse to get start -> end order
+
+            # explore all four directions
+            for dr, dc in directions:
+                next_row, next_col = current_row + dr, current_col + dc
+                next_pos = next_row, next_col
+
+                # check bounds
+                if (0 <= next_row < rows and 0 <= next_col < cols and grid[next_row][next_col] == 0 and next_pos not in visited):
+                    visited.add(next_pos)
+                    parent[next_pos] = (current_row, current_col)
+                    queue.append(next_pos)
+
+
+        return []
