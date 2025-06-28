@@ -202,11 +202,11 @@ class ArrayOperations:
 
         max_val = min_val = arr[0]
 
-        for num in arr:
-            if num > max_val:
-                max_val = num
-            if num < min_val:
-                min_val = num
+        for i in range(1, len(arr)):
+            if arr[i] > max_val:
+                max_val = arr[i]
+            elif arr[i] < min_val:
+                min_val = arr[i]
 
         return max_val, min_val
 
