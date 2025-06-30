@@ -11,16 +11,35 @@ class ArrayOperations:
             Q) What is the time complexity?
                 a)
         '''
-        pass
+        for i, element in enumerate(arr):
+            if element == target:
+                return i
+
+        return -1
 
     @staticmethod
     def binary_search(arr, target):
         '''
             Search for a target in a sorted array using binary search
         '''
-        pass
 
+        if not arr:
+            return -1
 
+        left = 0
+        right = len(arr) - 1
+
+        while left <= right:
+            mid = left + (right - left) // 2
+
+            if arr[mid] == target:
+                return mid
+            elif arr[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+        return -1
 
 
     @staticmethod
@@ -35,6 +54,20 @@ class ArrayOperations:
                 a) while
 
         '''
+
+        if not arr:
+            return []
+
+        left = 0
+        right = len(arr) - 1
+
+        while left < right:
+            arr[left], arr[right] = arr[right], arr[left]
+            left += 1
+            right -= 1
+
+        return arr
+
 
     @staticmethod
     def merge_sorted_arrays(nums1, m, nums2, n):
@@ -51,7 +84,19 @@ class ArrayOperations:
                 a) Time is O(m+n)
                 a) Space is O(1)
         '''
-        pass
+        i = m - 1
+        j = n - 1
+        k = m + n - 1
+
+        while j >= 0:
+            if i >= 0 and nums1[i] > nums2[j]:
+                nums1[k] = nums1[i]
+                i -= 1
+            else:
+                nums1[k] = nums2[j]
+                j -= 1
+            k -= 1
+        return nums1
 
     @staticmethod
     def search_insert(nums, target):
@@ -70,7 +115,18 @@ class ArrayOperations:
                 a) O(1)
         '''
 
-        pass
+        left = 0
+        right = len(nums)
+
+        while left < right:
+            mid = left + (right - left) // 2
+
+            if nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid
+
+        return left
 
     @staticmethod
     def search_range(nums, target):
@@ -90,9 +146,47 @@ class ArrayOperations:
 
         '''
 
-        pass
+        def find_first(nums, target):
+            first_pos = -1
+            left = 0
+            right = len(nums) - 1
 
+            while left <= right:
+                mid = left + (right - left) // 2
 
+                if nums[mid] == target:
+                    first_pos = mid
+                    right = mid - 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+
+            return first_pos
+
+        def find_last(nums, target):
+            last_pos = -1
+            left = 0
+            right = len(nums) - 1
+
+            while left <= right:
+                mid = left + (right - left) // 2
+
+                if nums[mid] == target:
+                    last_pos = mid
+                    left = mid + 1
+                elif nums[mid] < target:
+                    left = mid + 1
+                else:
+                    right = mid - 1
+
+            return last_pos
+
+        first = find_first(nums, target)
+        if first == -1:
+            return [-1, -1]
+        last = find_last(nums, target)
+        return [first, last]
 
 
 
@@ -102,9 +196,24 @@ class ArrayOperations:
 
             Q) What is the time complexity?
                 a) O(n)
+            Q) Is range() inclusive or exlusive of the start and end values?
+                a) [start, end) --> inclusive of start, exclusive of end (so gets to last index but not last index+1)
 
         '''
-        pass
+
+        if not arr:
+            return None, None
+
+        max_val = min_val = arr[0]
+
+        for i in range(1, len(arr)):
+            if arr[i] > max_val:
+                max_val = arr[i]
+            elif arr[i] < min_val:
+                min_val = arr[i]
+
+        return max_val, min_val
+
 
     @staticmethod
     def remove_duplicates(arr):
@@ -115,8 +224,16 @@ class ArrayOperations:
             Q) Why is it not advised to try to remove the duplicates in place using pop()?
                 a) Using pop() can cause issues with indexing since we are reducing the size of the array each time, causing tracking i to become difficult
         '''
-        pass
+        if not arr:
+            return []
 
+        result = [arr[0]]
+
+        for i in range(1, len(arr)):
+            if arr[i-1] != arr[i]:
+                result.append(arr[i])
+
+        return result
 
 
 
@@ -131,8 +248,17 @@ class ArrayOperations:
             Q) What is the key variable we need to define in addition to the parameter target variable?
                 a) Complement
         '''
-        pass
+        seen = {}
 
+        for i, num in enumerate(arr):
+            complement = target - num
+
+            if complement in seen:
+                return [seen[complement], i]
+
+            seen[num] = i
+
+        return []
 
 
     @staticmethod
@@ -152,9 +278,18 @@ class ArrayOperations:
             Q) What if we wanted to rotate to the left instead of to the right?
                 a) This is the same as shifting n-k elements instead of k elements
         '''
-        pass
+        n = len(arr)
+        if n == 0:
+            return []
 
+        k = k % n
 
+        arr.reverse()
+
+        arr[:k] = list(reversed(arr[:k]))
+        arr[k:] = list(reversed(arr[k:]))
+
+        return arr
 
     @staticmethod
     def kadanes_algorithm(arr):
@@ -168,8 +303,16 @@ class ArrayOperations:
                 a)
         '''
 
-        pass
+        if not arr:
+            return 0
 
+        current_max = global_max = arr[0]
+
+        for i in range(1, len(arr)):
+            current_max = max(arr[i], arr[i] + current_max)
+            global_max = max(global_max, current_max)
+
+        return global_max
 
     @staticmethod
     def kadanes_algorithm_with_subarray(arr):
@@ -179,9 +322,26 @@ class ArrayOperations:
                 a) start, global_start, global_end
 
         '''
-        pass
+        if not arr:
+            return 0, -1, -1
+
+        current_max = global_max = arr[0]
+        start = global_start = global_end = 0
+
+        for i in range(1, len(arr)):
+            if arr[i] > arr[i] + current_max:
+                current_max = arr[i]
+                start = i
+            else:
+                current_max = current_max + arr[i]
 
 
+            if current_max > global_max:
+                global_max = current_max
+                global_start = start
+                global_end = i
+
+        return global_max, global_start, global_end
 
 
 
