@@ -180,7 +180,7 @@ class SortingOperations:
 
 
     @staticmethod
-    def quick_sort(nums, low, high):
+    def quick_sort(arr):
         '''
         Quick sort with random pivot selection
 
@@ -204,33 +204,42 @@ class SortingOperations:
                 5. return the new index of the element (the item in the 'middle' of the partition)
         '''
 
-        if low < high:
-            p = SortingOperations._partition(nums, low, high)
+        if len(arr) < 2:
+            return arr
 
-            SortingOperations.quick_sort(nums, low, p - 1)
-            SortingOperations.quick_sort(nums, p + 1, high)
+        return SortingOperations._quick_sort_helper(arr.copy(), 0, len(arr) - 1)
 
 
     @staticmethod
-    def _partition(nums, low, high):
-        # select a random pivot index
-        pivot_index = random.randint(low, high)
+    def _quick_sort_helper(arr, low, high):
+        if low < high:
+            pivot_idx = SortingOperations._partition(arr, low, high)
 
+            SortingOperations._quick_sort_helper(arr, low, pivot_idx - 1)
+            SortingOperations._quick_sort_helper(arr, pivot_idx + 1, high)
+
+        return arr
+
+
+    @staticmethod
+    def _partition(arr, low, high):
+        # select a random pivot index
+        random_idx = random.randint(low, high)
         # swap the pivot with the last element so the classic partition logic can still be used
-        nums[pivot_index], nums[high] = nums[high], nums[pivot_index]
-        pivot = nums[high]
+        arr[random_idx], arr[high] = arr[high], arr[random_idx]
+        pivot = arr[high]
 
         i = low - 1 # track the position for the next smaller than pivot element
 
         # iterate through the subarray, excluding the pivot at nums[high]
         for j in range(low, high):
-            if nums[j] < pivot:
+            if arr[j] <= pivot:
                 i += 1
-                nums[i], nums[j] = nums[j], nums[i]
+                arr[i], arr[j] = arr[j], arr[i]
 
 
         # place the pivot in the correct sorted position
-        nums[i+1], nums[high] = nums[high], nums[i+1]
+        arr[i+1], arr[high] = arr[high], arr[i+1]
 
         return i + 1 # final index of the pivot
 
@@ -333,7 +342,7 @@ class SortingOperations:
 
         # build output array
         output = [0] * len(arr)
-        for i in range(len(arr) - 1, -1 -1): # reverse for stability
+        for i in range(len(arr) - 1, -1, -1): # reverse for stability
             output[count[arr[i]] - 1] = arr[i]
             count[arr[i]] -= 1
 
@@ -368,7 +377,7 @@ class SortingOperations:
         return arr
 
     @staticmethod
-    def counting_sort_by_digit(arr, exp):
+    def _counting_sort_by_digit(arr, exp):
         '''
         Counting sort by specific digit (exp -> 1 for units, 10 for tens, etc.)
         '''
@@ -446,7 +455,84 @@ class SortingOperations:
 
 
 
+    # performance comparison and analysis methods
+    @staticmethod
+    def compare_algorithms(arr, algorithms=None):
+        """
+        Compare performance of different sorting algorithms
 
+        Args:
+            arr: Array to sort
+            algorithms: List of algorithm names to test
+        Returns:
+            Dictionary with timing results
+        """
+        import time
+        import copy
+
+        if algorithms is None:
+            algorithms = ['bubble_sort', 'selection_sort', 'insertion_sort',
+                         'merge_sort', 'quick_sort', 'heap_sort']
+
+        results = {}
+
+        for algo_name in algorithms:
+            if hasattr(SortingOperations, algo_name):
+                algo = getattr(SortingOperations, algo_name)
+                test_arr = copy.deepcopy(arr)
+
+                start_time = time.time()
+                sorted_arr = algo(test_arr)
+                end_time = time.time()
+
+                results[algo_name] = {
+                    'time': end_time - start_time,
+                    'sorted': sorted_arr
+                }
+
+        return results
+
+    @staticmethod
+    def is_stable_sort(sort_func, test_cases=None):
+        """
+        Test if a sorting algorithm is stable
+
+        Args:
+            sort_func: Sorting function to test
+            test_cases: List of test arrays with duplicate values
+        Returns:
+            Boolean indicating if sort is stable
+        """
+        if test_cases is None:
+            test_cases = [
+                [(1, 'a'), (2, 'b'), (1, 'c'), (2, 'd')],
+                [(3, 'x'), (1, 'y'), (3, 'z'), (1, 'w')]
+            ]
+
+        for test_case in test_cases:
+            # create array with (value, original_index) pairs
+            indexed_arr = [(val, i) for i, (val, _) in enumerate(test_case)]
+
+            try:
+                sorted_arr = sort_func(indexed_arr)
+
+                # check if equal elements maintain relative order
+                seen_values = {}
+                for val, orig_idx in sorted_arr:
+                    if val not in seen_values:
+                        seen_values[val] = []
+                    seen_values[val].append(orig_idx)
+
+                # verify original order is preserved for equal values
+                for indices in seen_values.values():
+                    if indices != sorted(indices):
+                        return False
+
+            except (TypeError, ValueError):
+                # some algorithms might not handle tuples
+                continue
+
+        return True
 
 
 
