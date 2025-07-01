@@ -893,6 +893,74 @@ class ProblemTracker:
                         "method": "find_path_with_obstacles"
                     }
                 ]
+            },
+            "sorting": {
+                "description": "Sorting algorithms and their applications",
+                "problems": [
+                    {
+                        "name": "Bubble Sort",
+                        "difficulty": "Easy",
+                        "description": "Implement bubble sort with optimization flag for early termination",
+                        "file": "sorting_operations.py",
+                        "method": "bubble_sort"
+                    },
+                    {
+                        "name": "Selection Sort",
+                        "difficulty": "Easy",
+                        "description": "Implement selection sort - find minimum and place at beginning",
+                        "file": "sorting_operations.py",
+                        "method": "selection_sort"
+                    },
+                    {
+                        "name": "Insertion Sort",
+                        "difficulty": "Easy",
+                        "description": "Implement insertion sort - build sorted array one element at a time",
+                        "file": "sorting_operations.py",
+                        "method": "insertion_sort"
+                    },
+                    {
+                        "name": "Merge Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement merge sort using divide and conquer with guaranteed O(n log n)",
+                        "file": "sorting_operations.py",
+                        "method": "merge_sort"
+                    },
+                    {
+                        "name": "Quick Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement quicksort with random pivot selection to avoid worst case",
+                        "file": "sorting_operations.py",
+                        "method": "quick_sort"
+                    },
+                    {
+                        "name": "Heap Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement heap sort using max heap for ascending order",
+                        "file": "sorting_operations.py",
+                        "method": "heap_sort"
+                    },
+                    {
+                        "name": "Counting Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement counting sort for non-negative integers with linear time complexity",
+                        "file": "sorting_operations.py",
+                        "method": "counting_sort"
+                    },
+                    {
+                        "name": "Radix Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement radix sort for integers by sorting individual digits",
+                        "file": "sorting_operations.py",
+                        "method": "radix_sort"
+                    },
+                    {
+                        "name": "Bucket Sort",
+                        "difficulty": "Medium",
+                        "description": "Implement bucket sort for uniformly distributed floating point numbers",
+                        "file": "sorting_operations.py",
+                        "method": "bucket_sort"
+                    }
+                ]
             }
         }
 
@@ -1052,7 +1120,9 @@ class ProblemTracker:
             'linked_lists': 'Linked Lists',
             'arrays': 'Arrays',
             'backtracking': 'Backtracking',
-            'dynamic_programming': 'Dynamic Programming'
+            'dynamic_programming': 'Dynamic Programming',
+            'graphs': 'Graphs',
+            'sorting': 'Sorting'
         }
 
         # Get directory name, with fallback
