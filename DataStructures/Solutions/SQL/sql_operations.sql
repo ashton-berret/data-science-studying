@@ -360,4 +360,78 @@ ORDER BY c.country, o.total_amount DESC;
 
 -- =============================================================================
 -- WINDOW FUNCTIONS SOLUTIONS
-    -- =============================================================================
+-- =============================================================================
+
+-- Rank employees by salary within each department
+SELECT e.name, d.department, e.salary,
+    RANK() OVER (PARTITION BY d.department_name ORDER BY e.salary DESC) as salary_rank,
+    DENSE_RANK() OVER (PARTITION BY d.department_name ORDER BY e.salary DESC) as dense_rank,
+    ROW_NUMBER() OVER (PARTITION BY d.department_name ORDER BY e.salary DESC) as row_num
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+ORDER BY d.department_name, e.salary DESC;
+
+-- Number orders chronologically for each customer
+SELECT c.name, o.order_date, o.total_amount,
+    ROW_NUMBER() OVER (PARTITION BY c.customer_id ORDER BY o.order_date) as order_sequence
+FROM customers c
+JOIN orders o ON c.customer_id = o.customer_id
+ORDER BY c.name, o.order_date;
+
+-- Compare each employee's salary to the previous hire in their department
+SELECT e.name, d.department, e.hire_date, e.salary,
+    LAG(e.salary) OVER (PARTITION BY e.department_id ORDER BY e.hire_date) as prev_salary,
+    e.salary - LAG(e.salary) OVER (PARTITION BY e.department_id ORDER BY e.hire_date) as salary_diff
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+ORDER BY d.department_name, e.hire_date;
+
+-- Show order amount change from previous order for each customer
+SELECT c.name, o.order_date, o.total_amount,
+    LAG(o.total_amount) OVER (PARTITION BY o.customer_id ORDER BY o.order_date) as prev_amount,
+    o.total_amount - LAG(o.total_amount) OVER (PARTITION BY o.customer_id ORDER BY o.order_date) as amount_change
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+ORDER BY c.name, o.order_date;
+
+-- Show each employee's salary vs highest salary in their department
+SELECT e.name, d.department_name, e.salary,
+    FIRST_VALUE(e.salary) OVER (PARTITION BY e.department_id ORDER BY e.salary DESC) as dept_max_salary,
+    LAST_VALUE(e.salary) OVER (PARTITION BY e.department_id ORDER BY e.salary DESC ROWS BETWEEN UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING) as dept_min_salary
+FROM employees e
+JOIN delartments d ON e.department_id = d.department_id
+ORDER BY c.name, o.order_date;
+
+-- Calculate 3-Order moving average of order amounts by customer
+SELECT c.name, o.order_date, o.total_amount,
+    AVG(o.total_amount) OVER (PARTITION BY o.customer_id ORDER BY o.order_date ROWS BETWEEN 2 PRECEDING AND CURRENT ROW) as moving_avg_3
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+ORDER BY c.name, o.order_date;
+
+-- Running total of sales by month
+SELECT DATE_FORMAT(o.order_date,'%Y-%m') as order_month,
+    SUM(o.total_amount) as monthly_sales,
+    SUM(SUM(o.total_amount)) OVER (ORDER BY DATE_FORMAT(o.order_date,'%Y-%m')) as running_total
+FROM orders o
+GROUP BY DATE_FORMAT(o.order_date, '%Y-%m')
+ORDER BY order_month;
+
+-- Divide employees into salary quartiles
+SELECT e.name, d.department, e.salary, NTILE(4) OVER (ORDER BY e.salary) as salary_quartile
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+ORDER BY e.salary DESC;
+
+-- Calculate salary percentiles by department
+SELECT e.name, d.department_name, e.salary,
+    PERCENT_RANK() OVER (PARTITION BY e.department_id ORDER BY e.salary) as salary_percentile,
+    ROUND(PERCENT_RANK() OVER (PARTITION BY e.department_id ORDER BY e.salary) * 100, 1) as percentile_rank
+FROM employees e
+JOIN departments d ON e.department_id = d.department_id
+ORDER BY d.department_name, e.salary DESC;
+
+
+-- =============================================================================
+-- CTE SOLUTIONS
+-- =============================================================================
